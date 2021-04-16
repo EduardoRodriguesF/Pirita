@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirita", "Pirita.csproj", "{D23B9562-C0BF-4C37-AF5E-8ECAAA5AD4AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D23B9562-C0BF-4C37-AF5E-8ECAAA5AD4AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D23B9562-C0BF-4C37-AF5E-8ECAAA5AD4AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D23B9562-C0BF-4C37-AF5E-8ECAAA5AD4AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D23B9562-C0BF-4C37-AF5E-8ECAAA5AD4AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90C0A2E5-9437-4754-82BD-AF913A7AF97B}
+	EndGlobalSection
+EndGlobal
