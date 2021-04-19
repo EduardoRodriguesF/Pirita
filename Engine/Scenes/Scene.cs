@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Engine.Components;
+using Pirita.Engine.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Pirita.Engine.Scenes {
         protected int _viewportWidth, _viewportHeight;
         private readonly List<Component> _components = new List<Component>();
 
+        protected InputManager InputManager { get; set; }
+
         public event EventHandler<Scene> OnSceneSwitched;
         public event EventHandler<Event> OnEventNotification;
 
@@ -21,9 +24,13 @@ namespace Pirita.Engine.Scenes {
             _contentManager = contentManager;
             _viewportWidth = viewportWidth;
             _viewportHeight = viewportHeight;
+
+            SetInputManager();
         }
 
         public abstract void LoadContent();
+
+        protected abstract void SetInputManager();
 
         public void UnloadContent() {
             _contentManager.Unload();
@@ -50,6 +57,8 @@ namespace Pirita.Engine.Scenes {
         }
 
         public void Update(GameTime gameTime) {
+            if (InputManager != null) InputManager.Update();
+
             UpdateGameState(gameTime);
         }
 
