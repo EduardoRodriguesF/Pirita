@@ -66,9 +66,13 @@ namespace Pirita.Engine.Scenes {
         }
 
         public void Render(SpriteBatch spriteBatch) {
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
             foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
                 c.Render(spriteBatch);
             }
+
+            spriteBatch.End();
         }
 
         protected Texture2D LoadTexture(string textureName) {

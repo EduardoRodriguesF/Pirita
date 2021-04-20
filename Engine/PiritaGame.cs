@@ -114,11 +114,7 @@ namespace Pirita.Engine {
             GraphicsDevice.SetRenderTarget(_renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
-
             _currentScene.Render(_spriteBatch);
-
-            _spriteBatch.End();
 
             // Render scaled content
             _graphics.GraphicsDevice.SetRenderTarget(null);
