@@ -35,11 +35,6 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
 
         public override void UpdateGameState(GameTime gameTime) {
             base.UpdateGameState(gameTime);
-
-            HandleInput(gameTime);
-            foreach (var c in _components) {
-                c.Update(gameTime);
-            }
         }
 
         protected override void SetInputManager() {

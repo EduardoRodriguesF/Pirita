@@ -60,6 +60,7 @@ namespace Pirita.Engine.Scenes {
 
         public void Update(GameTime gameTime) {
             if (InputManager != null) InputManager.Update();
+            HandleInput(gameTime);
 
             UpdateGameState(gameTime);
         }
