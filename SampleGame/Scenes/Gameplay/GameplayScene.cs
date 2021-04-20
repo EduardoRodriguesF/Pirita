@@ -35,6 +35,9 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
 
         public override void UpdateGameState(GameTime gameTime) {
             base.UpdateGameState(gameTime);
+
+            Camera.Target = _player.Position;
+            Camera.UpdateCamera(new Viewport(0, 0, _viewportWidth, _viewportHeight));
         }
 
         protected override void SetInputManager() {
@@ -51,6 +54,10 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
             _player.SetAnimation(animations);
 
             AddComponent(_player);
+        }
+
+        protected override void SetCamera() {
+            Camera = new Camera(new Viewport(0, 0, _viewportWidth, _viewportHeight));
         }
     }
 }

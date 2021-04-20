@@ -16,6 +16,7 @@ namespace Pirita.Engine.Scenes {
         protected readonly List<Component> _components = new List<Component>();
 
         protected InputManager InputManager { get; set; }
+        protected Camera Camera { get; set; }
 
         public event EventHandler<Scene> OnSceneSwitched;
         public event EventHandler<Event> OnEventNotification;
@@ -26,6 +27,7 @@ namespace Pirita.Engine.Scenes {
             _viewportHeight = viewportHeight;
 
             SetInputManager();
+            SetCamera();
         }
 
         public abstract void LoadContent();
@@ -33,6 +35,7 @@ namespace Pirita.Engine.Scenes {
         public abstract void HandleInput(GameTime gameTime);
 
         protected abstract void SetInputManager();
+        protected abstract void SetCamera();
 
         public void UnloadContent() {
             _contentManager.Unload();
@@ -66,7 +69,7 @@ namespace Pirita.Engine.Scenes {
         }
 
         public void Render(SpriteBatch spriteBatch) {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform);
 
             foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
                 c.Render(spriteBatch);
