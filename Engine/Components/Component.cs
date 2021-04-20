@@ -1,11 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Engine.Scenes;
+using Pirita.Engine.Components.Animations;
 using System;
+using System.Collections.Generic;
 
 namespace Pirita.Engine.Components {
     public class Component {
-        protected Texture2D _texture;
+        protected List<Texture2D> _textures;
+        protected List<Animation> _animations;
+        protected AnimationManager _animationManager;
 
         protected Vector2 _position;
 
@@ -14,8 +18,8 @@ namespace Pirita.Engine.Components {
 
         public bool Destroyed { get; private set; }
 
-        public virtual int Width { get { return _texture.Width; } }
-        public virtual int Height { get { return _texture.Height; } }
+        public virtual int Width { get { return _textures[0].Width; } }
+        public virtual int Height { get { return _textures[0].Height; } }
 
         public virtual Vector2 Position {
             get { return _position; }
@@ -23,6 +27,18 @@ namespace Pirita.Engine.Components {
                 _position = value;
             }
         }
+
+        public void SetTextures(List<Texture2D> textures) {
+            _textures = textures;
+        }
+
+        public void SetAnimation(List<Animation> animations) {
+            _animations = animations;
+
+            _animationManager = new AnimationManager(_animations[0]);
+        }
+
+        protected virtual void Animate() { }
 
         public virtual void OnNotify(Event gameEvent) { }
         public void SendEvent(Event gameEvent) {
@@ -33,7 +49,11 @@ namespace Pirita.Engine.Components {
 
         public virtual void Render(SpriteBatch spriteBatch) {
             if (!Destroyed) {
-                spriteBatch.Draw(_texture, _position, Color.White);
+                if (_animationManager != null) {
+                    _animationManager.Render(spriteBatch, 1);
+                } else {
+                    spriteBatch.Draw(_textures[0], _position, Color.White);
+                }
             }
         }
 

@@ -21,8 +21,8 @@ namespace Pirita.SampleGame.Components {
             _movingRight = true;
         }
 
-        public Player(Texture2D texture) {
-            _texture = texture;
+        protected override void Animate() {
+            _animationManager.Play(_animations[1]);
         }
 
         public override void Update(GameTime gameTime) {
@@ -35,6 +35,10 @@ namespace Pirita.SampleGame.Components {
 
             _movingLeft = false;
             _movingRight = false;
+
+            Animate();
+            _animationManager.Position = _position;
+            _animationManager.Update(gameTime);
         }
     }
 }
