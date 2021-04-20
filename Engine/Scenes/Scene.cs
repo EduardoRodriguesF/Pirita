@@ -13,7 +13,7 @@ namespace Pirita.Engine.Scenes {
     public abstract class Scene {
         private ContentManager _contentManager;
         protected int _viewportWidth, _viewportHeight;
-        private readonly List<Component> _components = new List<Component>();
+        protected readonly List<Component> _components = new List<Component>();
 
         protected InputManager InputManager { get; set; }
 
@@ -29,6 +29,8 @@ namespace Pirita.Engine.Scenes {
         }
 
         public abstract void LoadContent();
+
+        public abstract void HandleInput(GameTime gameTime);
 
         protected abstract void SetInputManager();
 

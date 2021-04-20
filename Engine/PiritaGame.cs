@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pirita.Engine.Scenes;
 
-namespace Pirita {
+namespace Pirita.Engine {
     public class PiritaGame : Game {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
