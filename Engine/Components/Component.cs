@@ -29,7 +29,15 @@ namespace Pirita.Engine.Components {
         public virtual Vector2 Position {
             get { return _position; }
             set {
+                var deltaX = value.X - _position.X;
+                var deltaY = value.Y - _position.Y;
                 _position = value;
+
+                if (_animationManager != null) _animationManager.Position = _position;
+
+                foreach (var hb in _hitboxes) {
+                    hb.Position = new Vector2(hb.Position.X + deltaX, hb.Position.Y + deltaY);
+                }
             }
         }
 
