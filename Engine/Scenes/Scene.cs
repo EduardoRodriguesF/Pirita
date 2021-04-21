@@ -74,11 +74,11 @@ namespace Pirita.Engine.Scenes {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform);
 
             foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
-                if (_debug) {
-                    c.RenderHitbox(spriteBatch);
-                }
-
                 c.Render(spriteBatch);
+
+                if (_debug) {
+                    c.RenderHitbox(spriteBatch, Color.Red, 1);
+                }
             }
 
             spriteBatch.End();

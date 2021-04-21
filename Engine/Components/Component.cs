@@ -76,7 +76,7 @@ namespace Pirita.Engine.Components {
             }
         }
 
-        public void RenderHitbox(SpriteBatch spriteBatch) {
+        public void RenderHitbox(SpriteBatch spriteBatch, Color color, int lineWidth) {
             if (Destroyed) return;
 
             if (_hitboxTexture == null) {
@@ -84,7 +84,10 @@ namespace Pirita.Engine.Components {
             }
 
             foreach (var hb in _hitboxes) {
-                spriteBatch.Draw(_hitboxTexture, hb.Rectangle, Color.Red);
+                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, lineWidth, hb.Rectangle.Height + lineWidth), color);
+                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, hb.Rectangle.Width + lineWidth, lineWidth), color);
+                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X + hb.Rectangle.Width, hb.Rectangle.Y, 1, hb.Rectangle.Height + lineWidth), color);
+                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y + hb.Rectangle.Height, hb.Rectangle.Width + lineWidth, lineWidth), color);
             }
         }
 
