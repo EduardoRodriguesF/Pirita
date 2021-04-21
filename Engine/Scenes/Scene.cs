@@ -11,6 +11,8 @@ using System.Text;
 
 namespace Pirita.Engine.Scenes {
     public abstract class Scene {
+        private bool _debug = true;
+
         private ContentManager _contentManager;
         protected int _viewportWidth, _viewportHeight;
         protected readonly List<Component> _components = new List<Component>();
@@ -72,6 +74,10 @@ namespace Pirita.Engine.Scenes {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform);
 
             foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
+                if (_debug) {
+                    c.RenderHitbox(spriteBatch);
+                }
+
                 c.Render(spriteBatch);
             }
 

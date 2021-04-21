@@ -20,7 +20,7 @@ namespace Pirita.Engine.Components.Collision {
             }
         }
 
-        private void DetectCollisions(IEnumerable<A> activeComponents, Action<P, A> collisionHandler) {
+        public void DetectCollisions(IEnumerable<A> activeComponents, Action<P, A> collisionHandler) {
             foreach (var passiveComponent in _passiveComponents) {
                 var copiedList = new List<A>();
                 foreach (var activeComponent in activeComponents) {
