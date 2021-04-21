@@ -4,6 +4,7 @@ using Pirita.Engine.Scenes;
 using Pirita.Engine.Components.Animations;
 using System;
 using System.Collections.Generic;
+using Pirita.Engine.Components.Collision;
 
 namespace Pirita.Engine.Components {
     public class Component {
@@ -11,7 +12,11 @@ namespace Pirita.Engine.Components {
         protected List<Animation> _animations;
         protected AnimationManager _animationManager;
 
+        protected Texture2D _hitboxTexture;
+
         protected Vector2 _position;
+
+        protected List<Hitbox> _hitboxes = new List<Hitbox>();
 
         public int zIndex;
         public event EventHandler<Event> OnObjectChanged;
@@ -25,6 +30,12 @@ namespace Pirita.Engine.Components {
             get { return _position; }
             set {
                 _position = value;
+            }
+        }
+
+        public List<Hitbox> Hitboxes {
+            get {
+                return _hitboxes;
             }
         }
 
@@ -55,6 +66,27 @@ namespace Pirita.Engine.Components {
                     spriteBatch.Draw(_textures[0], _position, Color.White);
                 }
             }
+        }
+
+        public void RenderHitbox(SpriteBatch spriteBatch) {
+            if (Destroyed) return;
+
+            if (_hitboxTexture == null) {
+                CreateHitboxTexture(spriteBatch.GraphicsDevice);
+            }
+
+            foreach (var hb in _hitboxes) {
+                spriteBatch.Draw(_hitboxTexture, hb.Rectangle, Color.Red);
+            }
+        }
+
+        public void AddHitbox(Hitbox hb) {
+            _hitboxes.Add(hb);
+        }
+
+        private void CreateHitboxTexture(GraphicsDevice graphicsDevice) {
+            _hitboxTexture = new Texture2D(graphicsDevice, 1, 1);
+            _hitboxTexture.SetData<Color>(new Color[] { Color.White });
         }
 
         public void Destroy() {
