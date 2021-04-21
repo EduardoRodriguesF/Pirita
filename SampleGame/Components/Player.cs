@@ -10,10 +10,19 @@ namespace Pirita.SampleGame.Components {
     public class Player : Component {
         private const float Speed = 2f;
 
+        private const int HBPosX = 0;
+        private const int HBPosY = 0;
+        private const int HBWidth = 16;
+        private const int HBHeight = 16;
+
         public Vector2 Velocity;
 
         private bool _movingLeft, _movingRight;
         private sbyte _direction;
+
+        public Player() {
+            AddHitbox(new Engine.Components.Collision.Hitbox(new Vector2(HBPosX, HBPosY), HBWidth, HBHeight));
+        }
 
         public void MoveLeft() {
             _movingLeft = true;
@@ -29,8 +38,6 @@ namespace Pirita.SampleGame.Components {
             } else {
                 _animationManager.Play(_animations[0]);
             }
-            Debug.WriteLine(Velocity.X);
-
         }
 
         public override void Update(GameTime gameTime) {
@@ -43,7 +50,6 @@ namespace Pirita.SampleGame.Components {
             Position += Velocity;
 
             Animate();
-            _animationManager.Position = _position;
             _animationManager.Update(gameTime);
 
             _movingLeft = false;
