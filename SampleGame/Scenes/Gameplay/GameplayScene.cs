@@ -8,6 +8,7 @@ using Pirita.SampleGame.Components;
 using Pirita.SampleGame.Scenes.Gameplay.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Pirita.SampleGame.Scenes.Gameplay {
@@ -27,6 +28,8 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
             _coinTexture = LoadTexture("Sprites/Coin");
 
             _coinList = new List<Coin>();
+
+            SoundManager.RegisterSound(new GameplayEvents.CoinCollected(), LoadSound("Sounds/coin"));
 
             CreatePlayer(32, 0);
             CreateCoin(64, 0);
@@ -61,11 +64,8 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
             coinCollisionDetector.DetectCollisions(_player, (coin, _) => {
                 var collectEvent = new GameplayEvents.CoinCollected();
                 coin.OnNotify(collectEvent);
+                SoundManager.OnNotify(collectEvent);
             });
-        }
-
-        protected override void SetInputManager() {
-            InputManager = new Engine.Input.InputManager(new GameplayInputMapper());
         }
 
         private void CreatePlayer(int x, int y) {
@@ -98,8 +98,17 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
             AddComponent(coin);
         }
 
+        protected override void SetInputManager() {
+            InputManager = new Engine.Input.InputManager(new GameplayInputMapper());
+        }
+
+        protected override void SetSoundManager() {
+            SoundManager = new Engine.Sound.SoundManager();
+        }
+
         protected override void SetCamera() {
             Camera = new Camera(new Viewport(0, 0, _viewportWidth, _viewportHeight));
         }
+
     }
 }

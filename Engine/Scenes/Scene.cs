@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Engine.Components;
 using Pirita.Engine.Input;
+using Pirita.Engine.Sound;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Pirita.Engine.Scenes {
         protected readonly List<Component> _components = new List<Component>();
 
         protected InputManager InputManager { get; set; }
+        protected SoundManager SoundManager { get; set; }
+
         protected Camera Camera { get; set; }
 
         public event EventHandler<Scene> OnSceneSwitched;
@@ -29,6 +32,7 @@ namespace Pirita.Engine.Scenes {
             _viewportHeight = viewportHeight;
 
             SetInputManager();
+            SetSoundManager();
             SetCamera();
         }
 
@@ -37,6 +41,7 @@ namespace Pirita.Engine.Scenes {
         public abstract void HandleInput(GameTime gameTime);
 
         protected abstract void SetInputManager();
+        protected abstract void SetSoundManager();
         protected abstract void SetCamera();
 
         public void UnloadContent() {
