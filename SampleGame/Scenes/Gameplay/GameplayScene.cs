@@ -56,6 +56,8 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
             Camera.UpdateCamera(new Viewport(0, 0, _viewportWidth, _viewportHeight));
 
             DetectCollisions();
+
+            _coinList = CleanComponents(_coinList);
         }
 
         private void DetectCollisions() {
@@ -96,6 +98,17 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
 
             _coinList.Add(coin);
             AddComponent(coin);
+        }
+
+        private List<T> CleanComponents<T>(List<T> componentList) where T : Component {
+            List<T> listOfItemsToKeep = new List<T>();
+
+            foreach (T item in componentList) {
+                if (item.Destroyed) RemoveComponent(item);
+                else listOfItemsToKeep.Add(item);
+            }
+
+            return listOfItemsToKeep;
         }
 
         protected override void SetInputManager() {
