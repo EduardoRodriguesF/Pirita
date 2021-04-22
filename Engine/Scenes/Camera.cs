@@ -21,6 +21,20 @@ namespace Pirita.Engine.Scenes {
             Position = Vector2.Zero;
         }
 
+        public void MoveCamera(Vector2 movePosition) {
+            Vector2 newPosition = Position + movePosition;
+            Position = newPosition;
+        }
+
+        public void AdjustZoom(float zoomAmount) {
+            Zoom += zoomAmount;
+            if (Zoom < .35f) {
+                Zoom = .35f;
+            }
+            if (Zoom > 2f) {
+                Zoom = 2f;
+            }
+        }
 
         private void UpdateVisibleArea() {
             var inverseViewMatrix = Matrix.Invert(Transform);
@@ -44,21 +58,6 @@ namespace Pirita.Engine.Scenes {
                     Matrix.CreateScale(Zoom) *
                     Matrix.CreateTranslation(new Vector3(Bounds.Width * 0.5f, Bounds.Height * 0.5f, 0));
             UpdateVisibleArea();
-        }
-
-        public void MoveCamera(Vector2 movePosition) {
-            Vector2 newPosition = Position + movePosition;
-            Position = newPosition;
-        }
-
-        public void AdjustZoom(float zoomAmount) {
-            Zoom += zoomAmount;
-            if (Zoom < .35f) {
-                Zoom = .35f;
-            }
-            if (Zoom > 2f) {
-                Zoom = 2f;
-            }
         }
 
         public void UpdateCamera(Viewport bounds) {
