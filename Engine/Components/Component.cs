@@ -51,7 +51,7 @@ namespace Pirita.Engine.Components {
             _textures = textures;
         }
 
-        public void SetAnimation(List<Animation> animations) {
+        public void SetAnimations(List<Animation> animations) {
             _animations = animations;
 
             _animationManager = new AnimationManager(_animations[0]);

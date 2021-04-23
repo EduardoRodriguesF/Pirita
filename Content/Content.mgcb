@@ -49,6 +49,18 @@
 /processorParam:TextureFormat=Color
 /build:../../../../Documents/_SPRITE/mario_assets/Mario/Small/walk.png;Sprites/Player/walk.png
 
+#begin ../../../../Documents/_SPRITE/mario_assets/Solids/static.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../Documents/_SPRITE/mario_assets/Solids/static.png;Sprites/static.png
+
 #begin Sounds/coin-sound-effect.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor

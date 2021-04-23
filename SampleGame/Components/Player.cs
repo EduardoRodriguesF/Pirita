@@ -44,16 +44,20 @@ namespace Pirita.SampleGame.Components {
             var ml = _movingLeft ? 1 : 0;
             var mr = _movingRight ? 1 : 0;
 
+            Velocity.Y += 0.2f;
+
             _direction = (sbyte) (mr - ml);
             Velocity.X = _direction * Speed;
-
-            Position += Velocity;
 
             Animate();
             _animationManager.Update(gameTime);
 
             _movingLeft = false;
             _movingRight = false;
+        }
+
+        public void EndUpdate() {
+            Position += Velocity;
         }
     }
 }

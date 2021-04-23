@@ -22,11 +22,15 @@ namespace Pirita.Engine.Components.Collision {
         }
 
         public bool CollidesWith(Hitbox otherHB) {
+            return CollidesWith(otherHB, Position.X, Position.Y);
+        }
+
+        public bool CollidesWith(Hitbox otherHB, float xPos, float yPos) {
             return 
-                (Position.X < otherHB.Position.X + otherHB.Width &&
-                Position.X + Width > otherHB.Position.X &&
-                Position.Y < otherHB.Position.Y + otherHB.Height &&
-                Position.Y + Height > otherHB.Position.Y);
+                (xPos < otherHB.Position.X + otherHB.Width &&
+                xPos + Width > otherHB.Position.X &&
+                yPos < otherHB.Position.Y + otherHB.Height &&
+                yPos + Height > otherHB.Position.Y);
         }
 
         public bool CollidesWith(Vector2 p) {
