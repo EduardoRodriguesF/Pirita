@@ -99,8 +99,6 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
                 SoundManager.OnNotify(collectEvent);
             });
 
-            //var nearbySolids = _solidList.Where(s => Vector2.Distance(s.Position, _player.Position) < 48);
-
             foreach (var solid in _solidList) {
                 foreach (var hb in _player.Hitboxes) {
                     if (hb.CollidesWith(solid.Hitboxes[0], _player.Position.X + _player.Velocity.X, _player.Position.Y)) {
@@ -188,6 +186,5 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
         protected override void SetCamera() {
             Camera = new Camera(new Viewport(0, 0, _viewportWidth, _viewportHeight));
         }
-
     }
 }
