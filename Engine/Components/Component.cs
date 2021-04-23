@@ -23,8 +23,20 @@ namespace Pirita.Engine.Components {
 
         public bool Destroyed { get; private set; }
 
-        public virtual int Width { get { return _textures[0].Width; } }
-        public virtual int Height { get { return _textures[0].Height; } }
+        public virtual int Width { 
+            get {
+                if (_textures != null) return _textures[0].Width;
+                else if (_animationManager != null) return _animations[0].FrameWidth;
+                return 0;
+            } 
+        }
+        public virtual int Height { 
+            get {
+                if (_textures != null) return _textures[0].Height;
+                else if (_animationManager != null) return _animations[0].FrameHeight;
+                return 0;
+            } 
+        }
 
         public virtual Vector2 Position {
             get { return _position; }
