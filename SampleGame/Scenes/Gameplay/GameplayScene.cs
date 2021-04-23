@@ -100,6 +100,7 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
 
         private void DetectCollisions() {
             var coinCollisionDetector = new AABBCollisionDetector<Coin, Player>(_coinList);
+            var playerCollisionDetector = new AABBCollisionDetector<Solid, Player>(_solidList);
 
             coinCollisionDetector.DetectCollisions(_player, (coin, _) => {
                 var collectEvent = new GameplayEvents.CoinCollected();
@@ -107,25 +108,29 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
                 SoundManager.OnNotify(collectEvent);
             });
 
-            foreach (var solid in _solidList) {
-                foreach (var hb in _player.Hitboxes) {
-                    if (hb.CollidesWith(solid.Hitboxes[0], _player.Position.X + _player.Velocity.X, _player.Position.Y)) {
-                        while (!hb.CollidesWith(solid.Hitboxes[0], _player.Position.X + Math.Sign(_player.Velocity.X), _player.Position.Y)) {
-                            _player.Position += new Vector2(Math.Sign(_player.Velocity.X), 0);
-                        }
+            Vector2 pos;
 
-                        _player.Velocity.X = 0;
-                    }
-
-                    if (hb.CollidesWith(solid.Hitboxes[0], _player.Position.X, _player.Position.Y + _player.Velocity.Y)) {
-                        while (!hb.CollidesWith(solid.Hitboxes[0], _player.Position.X, _player.Position.Y + Math.Sign(_player.Velocity.Y))) {
-                            _player.Position += new Vector2(0, Math.Sign(_player.Velocity.Y));
-                        }
-
-                        _player.Velocity.Y = 0;
-                    }
+            pos = _player.Position + new Vector2(_player.Velocity.X, 0);
+            playerCollisionDetector.DetectCollisions(_player, pos, (solid, player) => {
+                if (player.Velocity.X > 0) {
+                    player.Position = new Vector2(player.Position.X + solid.Width, player.Position.Y);
+                } else if (player.Velocity.X < 0) {
+                    player.Position = new Vector2(player.Position.X - player.Width, player.Position.Y);
                 }
-            }
+
+                player.Velocity.X = 0;
+            });
+
+            pos = _player.Position + new Vector2(0, _player.Velocity.Y);
+            playerCollisionDetector.DetectCollisions(_player, pos, (solid, player) => {
+                if (player.Velocity.Y > 0) {
+                    player.Position = new Vector2(player.Position.X, solid.Position.Y - player.Height);
+                } else if (player.Velocity.Y < 0) {
+                    player.Position = new Vector2(player.Position.X, solid.Position.Y + solid.Height);
+                }
+
+                player.Velocity.Y = 0;
+            });
         }
 
         private void CreatePlayer(int x, int y) {
