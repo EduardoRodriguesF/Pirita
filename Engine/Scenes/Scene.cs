@@ -23,6 +23,8 @@ namespace Pirita.Engine.Scenes {
 
         protected Camera Camera { get; set; }
 
+        protected Rectangle RenderArea { get; set; }
+
         public event EventHandler<Scene> OnSceneSwitched;
         public event EventHandler<Event> OnEventNotification;
 
@@ -68,6 +70,12 @@ namespace Pirita.Engine.Scenes {
             if (InputManager != null) InputManager.Update();
             HandleInput(gameTime);
 
+            RenderArea = new Rectangle(
+                (int) (Camera.Position.X - (_viewportWidth / Camera.Zoom / 2)), 
+                (int) (Camera.Position.Y - (_viewportHeight / Camera.Zoom / 2)), 
+                (int) (_viewportWidth / Camera.Zoom), (int) (_viewportHeight / Camera.Zoom)
+            );
+
             UpdateGameState(gameTime);
         }
 
@@ -75,10 +83,12 @@ namespace Pirita.Engine.Scenes {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform);
 
             foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
-                c.Render(spriteBatch);
+                if (RenderArea.Intersects(c.Hitboxes[0].Rectangle)) {
+                    c.Render(spriteBatch);
 
-                if (_debug) {
-                    c.RenderHitbox(spriteBatch, Color.Red, 1);
+                    if (_debug) {
+                        c.RenderHitbox(spriteBatch, Color.Red, 1);
+                    }
                 }
             }
 
