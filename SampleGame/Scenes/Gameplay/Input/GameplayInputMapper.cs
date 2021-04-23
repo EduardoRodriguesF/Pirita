@@ -17,6 +17,10 @@ namespace Pirita.SampleGame.Scenes.Gameplay.Input {
                 commands.Add(new GameplayInputCommand.MoveRight());
             }
 
+            if (Pressed(Keys.Z, state, oldState)) {
+                commands.Add(new GameplayInputCommand.Jump());
+            }
+
             return commands;
         }
     }

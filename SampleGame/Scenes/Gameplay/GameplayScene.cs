@@ -74,6 +74,10 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
                 if (cmd is GameplayInputCommand.MoveRight) {
                     _player.MoveRight();
                 }
+
+                if (cmd is GameplayInputCommand.Jump) {
+                    _player.Jump();
+                }
             });
         }
 

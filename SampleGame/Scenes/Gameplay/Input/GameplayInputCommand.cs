@@ -7,5 +7,6 @@ namespace Pirita.SampleGame.Scenes.Gameplay.Input {
     public class GameplayInputCommand : InputCommand {
         public class MoveLeft : GameplayInputCommand { }
         public class MoveRight : GameplayInputCommand { }
+        public class Jump : GameplayInputCommand { }
     }
 }

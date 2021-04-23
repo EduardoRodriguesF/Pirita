@@ -9,6 +9,7 @@ using System.Text;
 namespace Pirita.SampleGame.Components {
     public class Player : Component {
         private const float Speed = 2f;
+        private const float JumpSpeed = 6f;
 
         private const int HBPosX = 0;
         private const int HBPosY = 0;
@@ -30,6 +31,10 @@ namespace Pirita.SampleGame.Components {
 
         public void MoveRight() {
             _movingRight = true;
+        }
+
+        public void Jump() {
+            Velocity.Y -= JumpSpeed;
         }
 
         protected override void Animate() {
