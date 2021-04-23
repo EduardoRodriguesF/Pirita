@@ -112,22 +112,12 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
 
             pos = _player.Position + new Vector2(_player.Velocity.X, 0);
             playerCollisionDetector.DetectCollisions(_player, pos, (solid, player) => {
-                if (player.Velocity.X > 0) {
-                    player.Position = new Vector2(player.Position.X + solid.Width, player.Position.Y);
-                } else if (player.Velocity.X < 0) {
-                    player.Position = new Vector2(player.Position.X - player.Width, player.Position.Y);
-                }
 
                 player.Velocity.X = 0;
             });
 
             pos = _player.Position + new Vector2(0, _player.Velocity.Y);
             playerCollisionDetector.DetectCollisions(_player, pos, (solid, player) => {
-                if (player.Velocity.Y > 0) {
-                    player.Position = new Vector2(player.Position.X, solid.Position.Y - player.Height);
-                } else if (player.Velocity.Y < 0) {
-                    player.Position = new Vector2(player.Position.X, solid.Position.Y + solid.Height);
-                }
 
                 player.Velocity.Y = 0;
             });
