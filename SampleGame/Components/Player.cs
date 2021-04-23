@@ -61,7 +61,7 @@ namespace Pirita.SampleGame.Components {
             _movingRight = false;
         }
 
-        public void EndUpdate() {
+        public override void PostUpdate(GameTime gameTime) {
             Position += Velocity;
         }
     }

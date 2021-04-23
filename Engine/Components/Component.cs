@@ -65,6 +65,7 @@ namespace Pirita.Engine.Components {
         }
 
         public virtual void Update(GameTime gameTime) { }
+        public virtual void PostUpdate(GameTime gameTime) { }
 
         public virtual void Render(SpriteBatch spriteBatch) {
             if (!Destroyed) {

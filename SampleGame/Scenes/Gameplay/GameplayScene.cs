@@ -82,14 +82,18 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
         }
 
         public override void UpdateGameState(GameTime gameTime) {
-            base.UpdateGameState(gameTime);
+            foreach (var c in _components) {
+                c.Update(gameTime);
+            }
 
             Camera.Target = _player.Position;
             Camera.UpdateCamera(new Viewport(0, 0, _viewportWidth, _viewportHeight));
 
             DetectCollisions();
 
-            _player.EndUpdate();
+            foreach (var c in _components) {
+                c.PostUpdate(gameTime);
+            }
 
             _coinList = CleanComponents(_coinList);
         }

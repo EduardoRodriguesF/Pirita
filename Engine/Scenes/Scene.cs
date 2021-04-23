@@ -62,11 +62,7 @@ namespace Pirita.Engine.Scenes {
             OnSceneSwitched?.Invoke(this, scene);
         }
 
-        public virtual void UpdateGameState(GameTime gameTime) {
-            foreach (var c in _components) {
-                c.Update(gameTime);
-            }
-        }
+        public abstract void UpdateGameState(GameTime gameTime);
 
         public void Update(GameTime gameTime) {
             if (InputManager != null) InputManager.Update();
