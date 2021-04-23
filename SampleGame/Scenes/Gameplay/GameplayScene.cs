@@ -188,5 +188,6 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
         protected override void SetCamera() {
             Camera = new Camera(new Viewport(0, 0, _viewportWidth, _viewportHeight));
         }
+
     }
 }
