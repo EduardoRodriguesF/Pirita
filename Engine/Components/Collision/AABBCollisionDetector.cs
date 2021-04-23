@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,8 +14,12 @@ namespace Pirita.Engine.Components.Collision {
         }
 
         public void DetectCollisions(A activeComponent, Action<P, A> collisionHandler) {
+            DetectCollisions(activeComponent, activeComponent.Position, collisionHandler);
+        }
+
+        public void DetectCollisions(A activeComponent, Vector2 pos, Action<P, A> collisionHandler) {
             foreach (var passiveComponent in _passiveComponents) {
-                if (DetectCollision(passiveComponent, activeComponent)) {
+                if (DetectCollision(passiveComponent, activeComponent, pos)) {
                     collisionHandler(passiveComponent, activeComponent);
                 }
             }
@@ -36,9 +41,13 @@ namespace Pirita.Engine.Components.Collision {
         }
 
         private bool DetectCollision(P passiveComponent, A activeComponent) {
+            return DetectCollision(passiveComponent, activeComponent, activeComponent.Position);
+        }
+
+        private bool DetectCollision(P passiveComponent, A activeComponent, Vector2 pos) {
             foreach (var passiveHB in passiveComponent.Hitboxes) {
                 foreach (var activeHB in activeComponent.Hitboxes) {
-                    return passiveHB.CollidesWith(activeHB);
+                    return activeHB.CollidesWith(passiveHB, pos);
                 }
             }
 
