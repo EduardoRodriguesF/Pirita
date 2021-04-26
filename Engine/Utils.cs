@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Utils {
-    public class Numbers {
-        public static float Approach(float from, float to, float amount) {
+namespace Pirita.Engine {
+    public static class Utils {
+		public static float Approach(float from, float to, float amount) {
 			if (from < to) {
 				from += amount;
 				if (from > to) return to;
@@ -14,5 +14,5 @@ namespace Pirita.Engine.Utils {
 			}
 			return from;
 		}
-    }
+	}
 }

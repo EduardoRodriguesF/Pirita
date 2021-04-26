@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pirita.Engine;
 using Pirita.Engine.Components;
-using Pirita.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -54,7 +54,7 @@ namespace Pirita.SampleGame.Components {
             Velocity.Y += 0.2f;
 
             _direction = (sbyte) (mr - ml);
-            Velocity.X = Numbers.Approach(Velocity.X, _direction * Speed, Acceleration);
+            Velocity.X = Utils.Approach(Velocity.X, _direction * Speed, Acceleration);
 
             Animate();
             _animationManager.Update(gameTime);
