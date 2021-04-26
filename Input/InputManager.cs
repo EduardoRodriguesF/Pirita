@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pirita.Input {
     public class InputManager {
@@ -33,7 +31,7 @@ namespace Pirita.Input {
             _oldKs = _ks;
             _ks = Keyboard.GetState();
 
-            _oldMs = _ms; 
+            _oldMs = _ms;
             _ms = Mouse.GetState();
 
             _oldGs = _gs;

@@ -1,5 +1,4 @@
-﻿using Pirita;
-using System;
+﻿using System;
 
 namespace Pirita {
     public static class Program {

@@ -2,7 +2,6 @@
 using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pirita.Sound {
     public class SoundManager {

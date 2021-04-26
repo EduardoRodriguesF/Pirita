@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pirita.Components.Collision {
     public class Hitbox {
@@ -26,7 +23,7 @@ namespace Pirita.Components.Collision {
         }
 
         public bool CollidesWith(Hitbox otherHB, Vector2 pos) {
-            return 
+            return
                 (pos.X < otherHB.Position.X + otherHB.Width &&
                 pos.X + Width > otherHB.Position.X &&
                 pos.Y < otherHB.Position.Y + otherHB.Height &&

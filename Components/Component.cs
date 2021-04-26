@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Scenes;
 using Pirita.Components.Animations;
+using Pirita.Components.Collision;
+using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
-using Pirita.Components.Collision;
 
 namespace Pirita.Components {
     public class Component {
@@ -23,19 +23,19 @@ namespace Pirita.Components {
 
         public bool Destroyed { get; private set; }
 
-        public virtual int Width { 
+        public virtual int Width {
             get {
                 if (_textures != null) return _textures[0].Width;
                 else if (_animationManager != null) return _animations[0].FrameWidth;
                 return 0;
-            } 
+            }
         }
-        public virtual int Height { 
+        public virtual int Height {
             get {
                 if (_textures != null) return _textures[0].Height;
                 else if (_animationManager != null) return _animations[0].FrameHeight;
                 return 0;
-            } 
+            }
         }
 
         public virtual Vector2 Position {

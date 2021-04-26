@@ -8,7 +8,6 @@ using Pirita.Sound;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Pirita.Scenes {
     public abstract class Scene {
@@ -71,9 +70,9 @@ namespace Pirita.Scenes {
             HandleInput(gameTime);
 
             RenderArea = new Rectangle(
-                (int) (Camera.Position.X - (_viewportWidth / Camera.Zoom / 2)), 
-                (int) (Camera.Position.Y - (_viewportHeight / Camera.Zoom / 2)), 
-                (int) (_viewportWidth / Camera.Zoom), (int) (_viewportHeight / Camera.Zoom)
+                (int)(Camera.Position.X - (_viewportWidth / Camera.Zoom / 2)),
+                (int)(Camera.Position.Y - (_viewportHeight / Camera.Zoom / 2)),
+                (int)(_viewportWidth / Camera.Zoom), (int)(_viewportHeight / Camera.Zoom)
             );
 
             UpdateGameState(gameTime);

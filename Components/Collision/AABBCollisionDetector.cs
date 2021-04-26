@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pirita.Components.Collision {
-    public class AABBCollisionDetector<P, A> 
-        where P : Component 
-        where A : Component  {
+    public class AABBCollisionDetector<P, A>
+        where P : Component
+        where A : Component {
         private IEnumerable<P> _passiveComponents;
 
         public AABBCollisionDetector(IEnumerable<P> passiveComponents) {
