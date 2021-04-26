@@ -108,16 +108,34 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
                 SoundManager.OnNotify(collectEvent);
             });
 
+
             Vector2 pos;
+            int velDir;
 
             pos = _player.Position + new Vector2(_player.Velocity.X, 0);
             playerCollisionDetector.DetectCollisions(_player, pos, (solid, player) => {
+                velDir = Math.Sign(player.Velocity.X);
+                pos.X = player.Position.X + velDir;
+
+                while (!playerCollisionDetector.DetectCollisions(player, pos)) {
+                    player.Position += new Vector2(velDir, 0);
+
+                    pos.X = _player.Position.X + velDir;
+                }
 
                 player.Velocity.X = 0;
             });
 
             pos = _player.Position + new Vector2(0, _player.Velocity.Y);
             playerCollisionDetector.DetectCollisions(_player, pos, (solid, player) => {
+                velDir = Math.Sign(player.Velocity.Y);
+                pos.Y = _player.Position.Y + velDir;
+
+                while (!playerCollisionDetector.DetectCollisions(player, pos)) {
+                    player.Position += new Vector2(0, velDir);
+
+                    pos.Y = _player.Position.Y + velDir;
+                }
 
                 player.Velocity.Y = 0;
             });

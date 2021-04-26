@@ -13,19 +13,22 @@ namespace Pirita.Engine.Components.Collision {
             _passiveComponents = passiveComponents;
         }
 
-        public void DetectCollisions(A activeComponent, Action<P, A> collisionHandler) {
-            DetectCollisions(activeComponent, activeComponent.Position, collisionHandler);
+        public bool DetectCollisions(A activeComponent, Action<P, A> collisionHandler = null) {
+            return DetectCollisions(activeComponent, activeComponent.Position, collisionHandler);
         }
 
-        public void DetectCollisions(A activeComponent, Vector2 pos, Action<P, A> collisionHandler) {
+        public bool DetectCollisions(A activeComponent, Vector2 pos, Action<P, A> collisionHandler = null) {
             foreach (var passiveComponent in _passiveComponents) {
                 if (DetectCollision(passiveComponent, activeComponent, pos)) {
-                    collisionHandler(passiveComponent, activeComponent);
+                    if (collisionHandler != null) collisionHandler(passiveComponent, activeComponent);
+                    return true;
                 }
             }
+
+            return false;
         }
 
-        public void DetectCollisions(IEnumerable<A> activeComponents, Action<P, A> collisionHandler) {
+        public bool DetectCollisions(IEnumerable<A> activeComponents, Action<P, A> collisionHandler = null) {
             foreach (var passiveComponent in _passiveComponents) {
                 var copiedList = new List<A>();
                 foreach (var activeComponent in activeComponents) {
@@ -34,10 +37,13 @@ namespace Pirita.Engine.Components.Collision {
 
                 foreach (var activeComponent in copiedList) {
                     if (DetectCollision(passiveComponent, activeComponent)) {
-                        collisionHandler(passiveComponent, activeComponent);
+                        if (collisionHandler != null) collisionHandler(passiveComponent, activeComponent);
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
 
         private bool DetectCollision(P passiveComponent, A activeComponent) {
