@@ -111,6 +111,10 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
                 if (cmd is GameplayInputCommand.Jump) {
                     _player.Jump();
                 }
+
+                if (cmd is GameplayInputCommand.ToggleDebugMode) {
+                    ToggleDebug();
+                }
             });
         }
 

@@ -21,6 +21,10 @@ namespace Pirita.SampleGame.Scenes.Gameplay.Input {
                 commands.Add(new GameplayInputCommand.Jump());
             }
 
+            if (Pressed(Keys.F3, state, oldState)) {
+                commands.Add(new GameplayInputCommand.ToggleDebugMode());
+            }
+
             return commands;
         }
     }

@@ -120,5 +120,9 @@ namespace Pirita.Engine.Scenes {
         protected void RemoveComponent(Component component) {
             _components.Remove(component);
         }
+
+        protected void ToggleDebug() {
+            _debug = !_debug;
+        }
     }
 }
