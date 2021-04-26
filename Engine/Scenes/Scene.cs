@@ -83,12 +83,18 @@ namespace Pirita.Engine.Scenes {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform);
 
             foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
-                if (RenderArea.Intersects(c.Hitboxes[0].Rectangle)) {
+                if (RenderArea.Intersects(new Rectangle((int)c.Position.X, (int)c.Position.Y, c.Width, c.Height))) {
                     c.Render(spriteBatch);
 
                     if (_debug) {
                         c.RenderHitbox(spriteBatch, Color.Red, 1);
                     }
+                }
+            }
+
+            foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
+                if (_debug) {
+                    c.RenderHitbox(spriteBatch, Color.Red, 1);
                 }
             }
 
