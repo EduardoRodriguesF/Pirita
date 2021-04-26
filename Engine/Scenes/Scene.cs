@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Pirita.Engine.Scenes {
     public abstract class Scene {
-        private bool _debug = true;
+        private bool _debug = false;
 
         private ContentManager _contentManager;
         protected int _viewportWidth, _viewportHeight;
