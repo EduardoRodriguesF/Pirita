@@ -46,22 +46,55 @@ namespace Pirita.SampleGame.Scenes.Gameplay {
             CreateSolid(0, 0);
             CreateSolid(150, 0);
 
-            for (var i = 0; i < 200; i++) {
+            for (var i = 0; i < 50; i++) {
                 var xPos = 16 * i;
 
                 CreateSolid(xPos, 96);
             }
 
-            for (var i = 0; i < 200; i++) {
+            for (var i = 0; i < 50; i++) {
                 var xPos = 16 * i;
 
                 CreateSolid(xPos, 112);
             }
 
-            for (var i = 0; i < 200; i++) {
+            for (var i = 0; i < 50; i++) {
                 var xPos = 16 * i;
 
                 CreateSolid(xPos, 128);
+            }
+
+            OptimizeSolidsHitbox();
+        }
+
+        public void OptimizeSolidsHitbox() {
+            foreach (var solid in _solidList) {
+                if (solid.Hitboxes.Count == 0) continue;
+
+                var solidsInSameRow = _solidList.Where(s => (
+                    s.Position.Y == solid.Position.Y && s != solid &&
+                    s.Position.X == solid.Position.X + solid.Hitboxes[0].Width
+                ));
+
+                foreach (var solidInSameRow in solidsInSameRow) {
+                    solid.Hitboxes[0].Width += solid.Width;
+                    solidInSameRow.Hitboxes.Remove(solidInSameRow.Hitboxes[0]);
+                }
+            }
+
+            foreach (var solid in _solidList) {
+                if (solid.Hitboxes.Count == 0) continue;
+
+                var solidsInSameColumn = _solidList.Where(s => (
+                    s.Position.X == solid.Position.X && s != solid &&
+                    s.Position.Y == solid.Position.Y + solid.Hitboxes[0].Height &&
+                    s.Hitboxes[0].Width == solid.Hitboxes[0].Width
+                ));
+
+                foreach (var solidInSameColumn in solidsInSameColumn) {
+                    solid.Hitboxes[0].Height += solid.Height;
+                    solidInSameColumn.Hitboxes.Remove(solidInSameColumn.Hitboxes[0]);
+                }
             }
         }
 
