@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Engine.Components;
+using Pirita.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using System.Text;
 namespace Pirita.SampleGame.Components {
     public class Player : Component {
         private const float Speed = 2f;
+        private const float Acceleration = 0.05f;
         private const float JumpSpeed = 6f;
 
         private const int HBPosX = 0;
@@ -52,7 +54,7 @@ namespace Pirita.SampleGame.Components {
             Velocity.Y += 0.2f;
 
             _direction = (sbyte) (mr - ml);
-            Velocity.X = _direction * Speed;
+            Velocity.X = Numbers.Approach(Velocity.X, _direction * Speed, Acceleration);
 
             Animate();
             _animationManager.Update(gameTime);
