@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Scenes {
+namespace Pirita.Scenes {
     public class Camera {
         public float Zoom { get; set; }
         public Vector2 Position { get; set; }

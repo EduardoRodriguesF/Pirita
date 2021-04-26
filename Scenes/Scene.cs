@@ -2,15 +2,15 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Engine.Components;
-using Pirita.Engine.Input;
-using Pirita.Engine.Sound;
+using Pirita.Components;
+using Pirita.Input;
+using Pirita.Sound;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Pirita.Engine.Scenes {
+namespace Pirita.Scenes {
     public abstract class Scene {
         private bool _debug = false;
 

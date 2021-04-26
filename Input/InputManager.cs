@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Input {
+namespace Pirita.Input {
     public class InputManager {
         private readonly InputMapper _inputMapper;
 

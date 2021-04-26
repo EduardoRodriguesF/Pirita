@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Sound {
+namespace Pirita.Sound {
     public class SoundBankItem {
         public SoundEffect Sound { get; private set; }
         public SoundAttributes Attributes { get; private set; }

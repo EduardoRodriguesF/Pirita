@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Components.Animations {
+namespace Pirita.Components.Animations {
     public class AnimationManager {
         private Animation _animation;
         private float _timer;

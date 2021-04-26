@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Components.Collision {
+namespace Pirita.Components.Collision {
     public class AABBCollisionDetector<P, A> 
         where P : Component 
         where A : Component  {

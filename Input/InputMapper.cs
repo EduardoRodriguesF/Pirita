@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Input {
+namespace Pirita.Input {
     public class InputMapper {
         protected bool Pressed(Keys k, KeyboardState state, KeyboardState oldState) {
             return state.IsKeyDown(k) && oldState.IsKeyUp(k);

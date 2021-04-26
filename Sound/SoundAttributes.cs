@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Sound {
+namespace Pirita.Sound {
     public class SoundAttributes {
         public float Volume { get; set; }
         public float Pitch { get; set; }

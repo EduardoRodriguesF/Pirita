@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Components.Collision {
+namespace Pirita.Components.Collision {
     public class Hitbox {
         public Vector2 Position { get; set; }
         public float Width { get; set; }

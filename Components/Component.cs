@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Engine.Scenes;
-using Pirita.Engine.Components.Animations;
+using Pirita.Scenes;
+using Pirita.Components.Animations;
 using System;
 using System.Collections.Generic;
-using Pirita.Engine.Components.Collision;
+using Pirita.Components.Collision;
 
-namespace Pirita.Engine.Components {
+namespace Pirita.Components {
     public class Component {
         protected List<Texture2D> _textures;
         protected List<Animation> _animations;

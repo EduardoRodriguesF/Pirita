@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Audio;
-using Pirita.Engine.Scenes;
+using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Sound {
+namespace Pirita.Sound {
     public class SoundManager {
         private Dictionary<Type, SoundBankItem> _soundBank = new Dictionary<Type, SoundBankItem>();
 

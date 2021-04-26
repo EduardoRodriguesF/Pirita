@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Scenes {
+namespace Pirita.Scenes {
     public class Event {
         public class Nothing : Event { }
         public class GameQuit : Event { }

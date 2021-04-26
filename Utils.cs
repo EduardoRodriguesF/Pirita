@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine {
+namespace Pirita {
     public static class Utils {
 		public static float Approach(float from, float to, float amount) {
 			if (from < to) {

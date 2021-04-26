@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Input {
+namespace Pirita.Input {
     public class InputCommand { }
 }

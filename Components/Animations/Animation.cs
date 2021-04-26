@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pirita.Engine.Components.Animations {
+namespace Pirita.Components.Animations {
     public class Animation {
         public Texture2D Texture { get; private set; }
         public int CurrentFrame { get; set; }
