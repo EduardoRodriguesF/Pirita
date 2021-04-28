@@ -5,19 +5,25 @@ using System.Text;
 
 namespace Pirita.UI {
     public class Grid {
-        private GridBox[][] _boxes;
+        private List<List<GridBox>> _boxes;
 
         public Grid(int horizontalBoxes, int verticalBoxes, Viewport bounds) {
             var width = bounds.Width / horizontalBoxes;
             var height = bounds.Height / verticalBoxes;
 
+            _boxes = new List<List<GridBox>>();
+
             for (var i = 0; i < horizontalBoxes; i++) {
+                List<GridBox> subList = new List<GridBox>();
+
                 for (var j = 0; j < verticalBoxes; j++) {
                     var xPos = bounds.X + (width * i);
                     var yPos = bounds.Y + (height * j);
 
-                    _boxes[i][j] = new GridBox(xPos, yPos, width, height);
+                    subList.Add(new GridBox(xPos, yPos, width, height));
                 }
+
+                _boxes.Add(subList);
             }
         }
 
@@ -26,7 +32,7 @@ namespace Pirita.UI {
         }
 
         public void RenderBounds(SpriteBatch spriteBatch) {
-            foreach (GridBox[] row in _boxes) {
+            foreach (List<GridBox> row in _boxes) {
                 foreach (GridBox gridBox in row) {
                     gridBox.RenderBounds(spriteBatch);
                 }
