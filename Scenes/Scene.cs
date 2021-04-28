@@ -63,6 +63,18 @@ namespace Pirita.Scenes {
             OnSceneSwitched?.Invoke(this, scene);
         }
 
+        protected virtual void UpdateComponents(GameTime gameTime) {
+            foreach (var component in _components) {
+                component.Update(gameTime);
+            }
+        }
+
+        protected virtual void PostUpdateComponents(GameTime gameTime) {
+            foreach (var component in _components) {
+                component.PostUpdate(gameTime);
+            }
+        }
+
         public abstract void UpdateGameState(GameTime gameTime);
 
         public void Update(GameTime gameTime) {
