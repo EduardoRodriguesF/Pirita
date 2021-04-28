@@ -45,8 +45,6 @@ namespace Pirita.Components {
                 var deltaY = value.Y - _position.Y;
                 _position = value;
 
-                if (_animationManager != null) _animationManager.Position = _position;
-
                 foreach (var hb in _hitboxes) {
                     hb.Position = new Vector2(hb.Position.X + deltaX, hb.Position.Y + deltaY);
                 }
@@ -70,6 +68,11 @@ namespace Pirita.Components {
         }
 
         protected virtual void Animate() { }
+
+        protected void UpdateAnimation(GameTime gameTime) {
+            _animationManager.Position = Position;
+            _animationManager.Update(gameTime);
+        }
 
         public virtual void OnNotify(Event gameEvent) { }
         public void SendEvent(Event gameEvent) {
