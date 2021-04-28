@@ -132,6 +132,17 @@ namespace Pirita.Scenes {
             _components.Remove(component);
         }
 
+        protected List<T> CleanComponents<T>(List<T> componentList) where T : Component {
+            List<T> listOfItemsToKeep = new List<T>();
+
+            foreach (T item in componentList) {
+                if (item.Destroyed) RemoveComponent(item);
+                else listOfItemsToKeep.Add(item);
+            }
+
+            return listOfItemsToKeep;
+        }
+
         protected void ToggleDebug() {
             _debug = !_debug;
         }
