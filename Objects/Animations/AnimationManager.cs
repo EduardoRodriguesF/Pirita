@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pirita.Objects.Animations {
+namespace Pirita.Animations {
     public class AnimationManager {
         private Animation _animation;
         private float _timer;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Objects.Animations;
-using Pirita.Objects.Collision;
+using Pirita.Animations;
+using Pirita.Collision;
 using Pirita.Scenes;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Pirita.Objects.Animations {
+namespace Pirita.Animations {
     public class Animation {
         public Texture2D Texture { get; private set; }
         public int CurrentFrame { get; set; }

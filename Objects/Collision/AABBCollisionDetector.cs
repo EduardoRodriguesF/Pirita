@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Pirita.Objects;
 using System;
 using System.Collections.Generic;
 
-namespace Pirita.Objects.Collision {
+namespace Pirita.Collision {
     public class AABBCollisionDetector<P, A>
         where P : GameObject
         where A : GameObject {
