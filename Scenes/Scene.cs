@@ -91,7 +91,7 @@ namespace Pirita.Scenes {
         }
 
         public void Render(SpriteBatch spriteBatch) {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform);
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
 
             foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
                 if (RenderArea.Intersects(new Rectangle((int)c.Position.X, (int)c.Position.Y, c.Width, c.Height))) {
