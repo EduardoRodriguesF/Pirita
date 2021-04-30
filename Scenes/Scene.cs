@@ -132,7 +132,7 @@ namespace Pirita.Scenes {
             _objects.Remove(gameObject);
         }
 
-        protected List<T> CleanComponents<T>(List<T> objectList) where T : GameObject {
+        protected List<T> CleanObjects<T>(List<T> objectList) where T : GameObject {
             List<T> listOfItemsToKeep = new List<T>();
 
             foreach (T item in objectList) {
