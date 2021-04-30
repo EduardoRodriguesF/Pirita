@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Pirita.Components.Collision {
+namespace Pirita.Objects.Collision {
     public class Hitbox {
         public Vector2 Position { get; set; }
         public float Width { get; set; }
