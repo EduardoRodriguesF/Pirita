@@ -18,7 +18,6 @@ namespace Pirita.Objects {
 
         protected List<Hitbox> _hitboxes = new List<Hitbox>();
 
-        public int zIndex;
         public event EventHandler<Event> OnObjectChanged;
 
         public bool Destroyed { get; private set; }
