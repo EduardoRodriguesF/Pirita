@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Components.Animations;
-using Pirita.Components.Collision;
+using Pirita.Animations;
+using Pirita.Collision;
 using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
 
-namespace Pirita.Components {
-    public class Component {
+namespace Pirita.Objects {
+    public class GameObject : Drawable {
         protected List<Texture2D> _textures;
         protected List<Animation> _animations;
         protected AnimationManager _animationManager;
@@ -18,7 +18,6 @@ namespace Pirita.Components {
 
         protected List<Hitbox> _hitboxes = new List<Hitbox>();
 
-        public int zIndex;
         public event EventHandler<Event> OnObjectChanged;
 
         public bool Destroyed { get; private set; }
@@ -38,7 +37,7 @@ namespace Pirita.Components {
             }
         }
 
-        public virtual Vector2 Position {
+        public override Vector2 Position {
             get { return _position; }
             set {
                 var deltaX = value.X - _position.X;
@@ -82,7 +81,7 @@ namespace Pirita.Components {
         public virtual void Update(GameTime gameTime) { }
         public virtual void PostUpdate(GameTime gameTime) { }
 
-        public virtual void Render(SpriteBatch spriteBatch) {
+        public override void Render(SpriteBatch spriteBatch) {
             if (!Destroyed) {
                 if (_animationManager != null) {
                     _animationManager.Render(spriteBatch, 1);

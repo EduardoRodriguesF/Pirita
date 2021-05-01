@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Components;
+using Pirita.Objects;
 using Pirita.Input;
 using Pirita.Sound;
 using System;
@@ -15,7 +15,7 @@ namespace Pirita.Scenes {
 
         private ContentManager _contentManager;
         protected int _viewportWidth, _viewportHeight;
-        protected readonly List<Component> _components = new List<Component>();
+        protected readonly List<GameObject> _gameObjects = new List<GameObject>();
 
         protected InputManager InputManager { get; set; }
         protected SoundManager SoundManager { get; set; }
@@ -52,9 +52,9 @@ namespace Pirita.Scenes {
         protected void NotifyEvent(Event gameEvent) {
             OnEventNotification?.Invoke(this, gameEvent);
 
-            foreach (var c in _components) {
-                if (c != null) {
-                    c.OnNotify(gameEvent);
+            foreach (var obj in _gameObjects) {
+                if (obj != null) {
+                    obj.OnNotify(gameEvent);
                 }
             }
         }
@@ -63,15 +63,15 @@ namespace Pirita.Scenes {
             OnSceneSwitched?.Invoke(this, scene);
         }
 
-        protected virtual void UpdateComponents(GameTime gameTime) {
-            foreach (var component in _components) {
-                component.Update(gameTime);
+        protected virtual void UpdateObjects(GameTime gameTime) {
+            foreach (var gameObject in _gameObjects) {
+                gameObject.Update(gameTime);
             }
         }
 
-        protected virtual void PostUpdateComponents(GameTime gameTime) {
-            foreach (var component in _components) {
-                component.PostUpdate(gameTime);
+        protected virtual void PostUpdateObjects(GameTime gameTime) {
+            foreach (var obj in _gameObjects) {
+                obj.PostUpdate(gameTime);
             }
         }
 
@@ -93,19 +93,19 @@ namespace Pirita.Scenes {
         public void Render(SpriteBatch spriteBatch) {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
 
-            foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
-                if (RenderArea.Intersects(new Rectangle((int)c.Position.X, (int)c.Position.Y, c.Width, c.Height))) {
-                    c.Render(spriteBatch);
+            foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
+                if (RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
+                    obj.Render(spriteBatch);
 
                     if (_debug) {
-                        c.RenderHitbox(spriteBatch, Color.Red, 1);
+                        obj.RenderHitbox(spriteBatch, Color.Red, 1);
                     }
                 }
             }
 
-            foreach (var c in _components.Where(a => a != null).OrderBy(a => a.zIndex)) {
+            foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
                 if (_debug) {
-                    c.RenderHitbox(spriteBatch, Color.Red, 1);
+                    obj.RenderHitbox(spriteBatch, Color.Red, 1);
                 }
             }
 
@@ -124,19 +124,19 @@ namespace Pirita.Scenes {
             return _contentManager.Load<SoundEffect>(soundName);
         }
 
-        protected void AddComponent(Component component) {
-            _components.Add(component);
+        protected void AddObject(GameObject gameObject) {
+            _gameObjects.Add(gameObject);
         }
 
-        protected void RemoveComponent(Component component) {
-            _components.Remove(component);
+        protected void RemoveObject(GameObject gameObject) {
+            _gameObjects.Remove(gameObject);
         }
 
-        protected List<T> CleanComponents<T>(List<T> componentList) where T : Component {
+        protected List<T> CleanObjects<T>(List<T> objectList) where T : GameObject {
             List<T> listOfItemsToKeep = new List<T>();
 
-            foreach (T item in componentList) {
-                if (item.Destroyed) RemoveComponent(item);
+            foreach (T item in objectList) {
+                if (item.Destroyed) RemoveObject(item);
                 else listOfItemsToKeep.Add(item);
             }
 
