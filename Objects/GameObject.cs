@@ -86,7 +86,7 @@ namespace Pirita.Objects {
                 if (_animationManager != null) {
                     _animationManager.Render(spriteBatch, Origin, Scale, Opacity, Rotation);
                 } else {
-                    spriteBatch.Draw(_textures[0], _position, Rectangle.Empty, Color.White * Opacity, Rotation, Origin, Scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(_textures[0], _position, new Rectangle(0, 0, Width, Height), Color.White * Opacity, Rotation, Origin, Scale, SpriteEffects.None, 0f);
                 }
             }
         }
