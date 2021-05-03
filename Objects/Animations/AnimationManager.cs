@@ -5,8 +5,13 @@ namespace Pirita.Animations {
     public class AnimationManager {
         private Animation _animation;
         private float _timer;
-        public Vector2 Position { get; set; }
         private int _flipX;
+        private bool _animationEnded;
+
+        public Vector2 Position { get; set; }
+        public bool IsOnAnimationEnd { get => _animationEnded; }
+
+        public Animation CurrentAnimation { get => _animation; }
 
         public AnimationManager(Animation animation) {
             _animation = animation;
@@ -36,8 +41,12 @@ namespace Pirita.Animations {
                 _timer = 0f;
                 _animation.CurrentFrame++;
 
-                if (_animation.CurrentFrame >= _animation.FrameCount)
+                if (_animation.CurrentFrame >= _animation.FrameCount) {
                     _animation.CurrentFrame = 0;
+                    _animationEnded = true;
+                } else {
+                    _animationEnded = false;
+                }
             }
         }
 
