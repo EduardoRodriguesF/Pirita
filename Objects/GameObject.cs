@@ -84,9 +84,9 @@ namespace Pirita.Objects {
         public override void Render(SpriteBatch spriteBatch) {
             if (!Destroyed) {
                 if (_animationManager != null) {
-                    _animationManager.Render(spriteBatch, 1);
+                    _animationManager.Render(spriteBatch, Origin, Scale, Opacity, Rotation);
                 } else {
-                    spriteBatch.Draw(_textures[0], _position, Color.White);
+                    spriteBatch.Draw(_textures[0], _position, Rectangle.Empty, Color.White * Opacity, Rotation, Origin, Scale, SpriteEffects.None, 0f);
                 }
             }
         }

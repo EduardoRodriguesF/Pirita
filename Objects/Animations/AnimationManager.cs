@@ -11,9 +11,6 @@ namespace Pirita.Animations {
 
         public Vector2 Position { get; set; }
         public bool IsOnAnimationEnd { get => _animationEnded; }
-        public Vector2 Scale { get; set; }
-        public float Rotation { get; set; }
-        public Vector2 Origin { get; set; }
 
         public Animation CurrentAnimation { get => _animation; }
 
@@ -55,14 +52,14 @@ namespace Pirita.Animations {
             }
         }
 
-        public void Render(SpriteBatch spriteBatch, float _opacity) {
+        public void Render(SpriteBatch spriteBatch, Vector2 origin, Vector2 scale, float opacity = 1f, float rotation = 0f) {
             spriteBatch.Draw(_animation.Texture, Position,
                 new Rectangle(
                     _animation.CurrentFrame * _animation.FrameWidth,
                     0,
                     _animation.FrameWidth,
                     _animation.FrameHeight
-                ), Color.White * _opacity, (float) (180 / Math.PI) * Rotation, Origin, Scale, (SpriteEffects)_flipX, 0f);
+                ), Color.White * opacity, (float) (180 / Math.PI) * rotation, origin, scale, (SpriteEffects)_flipX, 0f);
         }
     }
 }
