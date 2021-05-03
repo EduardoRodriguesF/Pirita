@@ -16,7 +16,6 @@ namespace Pirita.Animations {
 
         public AnimationManager(Animation animation) {
             _animation = animation;
-            Scale = new Vector2(1, 1);
         }
 
         public void InvertX(bool flip) {
