@@ -5,6 +5,7 @@ using Pirita.Collision;
 using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Pirita.Objects {
     public class GameObject : Drawable {

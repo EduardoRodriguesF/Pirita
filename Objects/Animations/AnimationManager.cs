@@ -58,7 +58,7 @@ namespace Pirita.Animations {
                     0,
                     _animation.FrameWidth,
                     _animation.FrameHeight
-                ), Color.White * opacity, (float) (180 / Math.PI) * rotation, origin, scale, (SpriteEffects)_flipX, 0f);
+                ), Color.White * opacity, rotation, origin, scale, (SpriteEffects)_flipX, 0f);
         }
     }
 }
