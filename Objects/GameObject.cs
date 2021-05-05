@@ -13,7 +13,7 @@ namespace Pirita.Objects {
         protected List<Animation> _animations;
         protected AnimationManager _animationManager;
 
-        protected Texture2D _hitboxTexture;
+        protected Texture2D _debugTexture;
 
         protected Vector2 _position;
 
@@ -95,25 +95,35 @@ namespace Pirita.Objects {
         public void RenderHitbox(SpriteBatch spriteBatch, Color color, int lineWidth) {
             if (Destroyed) return;
 
-            if (_hitboxTexture == null) {
-                CreateHitboxTexture(spriteBatch.GraphicsDevice);
+            if (_debugTexture == null) {
+                CreateDebugTexture(spriteBatch.GraphicsDevice);
             }
 
             foreach (var hb in _hitboxes) {
-                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, lineWidth, hb.Rectangle.Height + lineWidth), color);
-                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, hb.Rectangle.Width + lineWidth, lineWidth), color);
-                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X + hb.Rectangle.Width, hb.Rectangle.Y, 1, hb.Rectangle.Height + lineWidth), color);
-                spriteBatch.Draw(_hitboxTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y + hb.Rectangle.Height, hb.Rectangle.Width + lineWidth, lineWidth), color);
+                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, lineWidth, hb.Rectangle.Height + lineWidth), color);
+                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, hb.Rectangle.Width + lineWidth, lineWidth), color);
+                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X + hb.Rectangle.Width, hb.Rectangle.Y, 1, hb.Rectangle.Height + lineWidth), color);
+                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y + hb.Rectangle.Height, hb.Rectangle.Width + lineWidth, lineWidth), color);
             }
+        }
+
+        public void RenderOrigin(SpriteBatch spriteBatch, Color color, int size) {
+            if (Destroyed) return;
+
+            if (_debugTexture == null) {
+                CreateDebugTexture(spriteBatch.GraphicsDevice);
+            }
+
+            spriteBatch.Draw(_debugTexture, new Rectangle((int)(Position.X), (int)(Position.Y), size, size), color);
         }
 
         public void AddHitbox(Hitbox hb) {
             _hitboxes.Add(hb);
         }
 
-        private void CreateHitboxTexture(GraphicsDevice graphicsDevice) {
-            _hitboxTexture = new Texture2D(graphicsDevice, 1, 1);
-            _hitboxTexture.SetData<Color>(new Color[] { Color.White });
+        private void CreateDebugTexture(GraphicsDevice graphicsDevice) {
+            _debugTexture = new Texture2D(graphicsDevice, 1, 1);
+            _debugTexture.SetData<Color>(new Color[] { Color.White });
         }
 
         public void Destroy() {
