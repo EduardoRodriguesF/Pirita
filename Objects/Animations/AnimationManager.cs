@@ -43,7 +43,10 @@ namespace Pirita.Animations {
                 _animation.CurrentFrame++;
 
                 if (_animation.CurrentFrame >= _animation.FrameCount) {
-                    _animation.CurrentFrame = 0;
+                    if (_animation.isLooping)
+                        _animation.CurrentFrame = 0;
+                    else _animation.CurrentFrame--;
+
                     _animationEnded = true;
                 } else {
                     _animationEnded = false;
@@ -52,7 +55,9 @@ namespace Pirita.Animations {
         }
 
         public void Render(SpriteBatch spriteBatch, Vector2 origin, Vector2 scale, float opacity = 1f, float rotation = 0f) {
-            spriteBatch.Draw(_animation.Texture, Position,
+            var offset = _flipX == 1 ? _animation.InvertedOffset : _animation.RegularOffset;
+
+            spriteBatch.Draw(_animation.Texture, Position + offset,
                 new Rectangle(
                     _animation.CurrentFrame * _animation.FrameWidth,
                     0,
