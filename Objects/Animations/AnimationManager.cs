@@ -55,6 +55,7 @@ namespace Pirita.Animations {
         }
 
         public void Render(SpriteBatch spriteBatch, Vector2 origin, Vector2 scale, float opacity = 1f, float rotation = 0f) {
+            InvertX(scale.X < 0);
             var offset = _flipX == 1 ? _animation.InvertedOffset : _animation.RegularOffset;
 
             spriteBatch.Draw(_animation.Texture, Position + offset,
@@ -63,7 +64,7 @@ namespace Pirita.Animations {
                     0,
                     _animation.FrameWidth,
                     _animation.FrameHeight
-                ), Color.White * opacity, rotation, origin, scale, (SpriteEffects)_flipX, 0f);
+                ), Color.White * opacity, rotation, origin, new Vector2(Math.Abs(scale.X), Math.Abs(scale.Y)), (SpriteEffects)_flipX, 0f);
         }
     }
 }
