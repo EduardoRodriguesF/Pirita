@@ -45,7 +45,6 @@ namespace Pirita.Animations {
                 if (_animation.CurrentFrame >= _animation.FrameCount) {
                     if (_animation.isLooping)
                         _animation.CurrentFrame = 0;
-                    else _animation.CurrentFrame--;
 
                     _animationEnded = true;
                 } else {
