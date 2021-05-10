@@ -5,7 +5,6 @@ using Pirita.Collision;
 using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Pirita.Objects {
     public class GameObject : Drawable {
@@ -53,6 +52,10 @@ namespace Pirita.Objects {
 
         public List<Hitbox> Hitboxes {
             get {
+                foreach (var hb in _hitboxes) {
+                    hb.Scale = Scale;
+                }
+
                 return _hitboxes;
             }
         }
