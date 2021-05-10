@@ -47,7 +47,13 @@ namespace Pirita.Collision {
         }
 
         private bool DetectCollision(P passiveObject, A activeObject) {
-            return DetectCollision(passiveObject, activeObject, activeObject.Position);
+            foreach (var passiveHB in passiveObject.Hitboxes) {
+                foreach (var activeHB in activeObject.Hitboxes) {
+                    return activeHB.CollidesWith(passiveHB);
+                }
+            }
+
+            return false;
         }
 
         private bool DetectCollision(P passiveObject, A activeObject, Vector2 pos) {

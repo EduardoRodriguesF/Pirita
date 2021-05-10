@@ -100,10 +100,13 @@ namespace Pirita.Objects {
             }
 
             foreach (var hb in _hitboxes) {
-                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, lineWidth, hb.Rectangle.Height + lineWidth), color);
-                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y, hb.Rectangle.Width + lineWidth, lineWidth), color);
-                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X + hb.Rectangle.Width, hb.Rectangle.Y, 1, hb.Rectangle.Height + lineWidth), color);
-                spriteBatch.Draw(_debugTexture, new Rectangle(hb.Rectangle.X, hb.Rectangle.Y + hb.Rectangle.Height, hb.Rectangle.Width + lineWidth, lineWidth), color);
+                int xPos = (int) (hb.Rectangle.X);
+                int yPos = (int) (hb.Rectangle.Y);
+
+                spriteBatch.Draw(_debugTexture, new Rectangle(xPos, yPos, lineWidth, hb.Rectangle.Height + lineWidth), color);
+                spriteBatch.Draw(_debugTexture, new Rectangle(xPos, yPos, hb.Rectangle.Width + lineWidth, lineWidth), color);
+                spriteBatch.Draw(_debugTexture, new Rectangle(xPos + hb.Rectangle.Width, yPos, 1, hb.Rectangle.Height + lineWidth), color);
+                spriteBatch.Draw(_debugTexture, new Rectangle(xPos, yPos + hb.Rectangle.Height, hb.Rectangle.Width + lineWidth, lineWidth), color);
             }
         }
 
