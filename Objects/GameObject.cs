@@ -64,8 +64,18 @@ namespace Pirita.Objects {
             _textures = textures;
         }
 
+        public void SetTexture(Texture2D texture) {
+            _textures = new List<Texture2D>() { texture };
+        }
+
         public void SetAnimations(List<Animation> animations) {
             _animations = animations;
+
+            _animationManager = new AnimationManager(_animations[0]);
+        }
+
+        public void SetAnimation(Animation animation) {
+            _animations = new List<Animation>() { animation };
 
             _animationManager = new AnimationManager(_animations[0]);
         }
