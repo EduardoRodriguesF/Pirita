@@ -1,12 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Pirita.Animations {
     public class AnimationManager {
         private Animation _animation;
         private float _timer;
-        public Vector2 Position { get; set; }
         private int _flipX;
+        private bool _animationEnded;
+
+        public Vector2 Position { get; set; }
+        public bool IsOnAnimationEnd { get => _animationEnded; }
+
+        public Animation CurrentAnimation { get => _animation; }
 
         public AnimationManager(Animation animation) {
             _animation = animation;
@@ -36,19 +42,29 @@ namespace Pirita.Animations {
                 _timer = 0f;
                 _animation.CurrentFrame++;
 
-                if (_animation.CurrentFrame >= _animation.FrameCount)
-                    _animation.CurrentFrame = 0;
+                if (_animation.CurrentFrame >= _animation.FrameCount) {
+                    if (_animation.isLooping)
+                        _animation.CurrentFrame = 0;
+                    else _animation.CurrentFrame--;
+
+                    _animationEnded = true;
+                } else {
+                    _animationEnded = false;
+                }
             }
         }
 
-        public void Render(SpriteBatch spriteBatch, float _opacity) {
-            spriteBatch.Draw(_animation.Texture, Position,
+        public void Render(SpriteBatch spriteBatch, Vector2 origin, Vector2 scale, float opacity = 1f, float rotation = 0f) {
+            InvertX(scale.X < 0);
+            var offset = _flipX == 1 ? _animation.InvertedOffset : _animation.RegularOffset;
+
+            spriteBatch.Draw(_animation.Texture, Position + offset,
                 new Rectangle(
                     _animation.CurrentFrame * _animation.FrameWidth,
                     0,
                     _animation.FrameWidth,
                     _animation.FrameHeight
-                ), Color.White * _opacity, 0, new Vector2(0, 0), new Vector2(1, 1), (SpriteEffects)_flipX, 0f);
+                ), Color.White * opacity, rotation, origin, new Vector2(Math.Abs(scale.X), Math.Abs(scale.Y)), (SpriteEffects)_flipX, 0f);
         }
     }
 }

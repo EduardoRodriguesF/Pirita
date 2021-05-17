@@ -6,13 +6,22 @@ namespace Pirita.Input {
         protected bool Pressed(Keys k, KeyboardState state, KeyboardState oldState) {
             return state.IsKeyDown(k) && oldState.IsKeyUp(k);
         }
+        protected bool Pressed(ButtonState state, ButtonState oldState) {
+            return state == ButtonState.Pressed && oldState == ButtonState.Released;
+        }
 
         protected bool Holding(Keys k, KeyboardState state) {
             return state.IsKeyDown(k);
         }
+        protected bool Holding(ButtonState state) {
+            return state == ButtonState.Pressed;
+        }
 
         protected bool Released(Keys k, KeyboardState state, KeyboardState oldState) {
             return state.IsKeyUp(k) && oldState.IsKeyDown(k);
+        }
+        protected bool Released(ButtonState state, ButtonState oldState) {
+            return state == ButtonState.Released && oldState == ButtonState.Pressed;
         }
 
         public virtual IEnumerable<InputCommand> GetKeyboardState(KeyboardState state, KeyboardState oldState) {

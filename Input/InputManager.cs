@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace Pirita.Input {
@@ -50,6 +51,10 @@ namespace Pirita.Input {
             foreach (var state in _inputMapper.GetGamePadState(_gs, _oldGs)) {
                 actOnState(state);
             }
+        }
+
+        public Point GetMousePosition() {
+            return _ms.Position;
         }
     }
 }

@@ -99,6 +99,7 @@ namespace Pirita.Scenes {
 
                     if (_debug) {
                         obj.RenderHitbox(spriteBatch, Color.Red, 1);
+                        obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
                     }
                 }
             }

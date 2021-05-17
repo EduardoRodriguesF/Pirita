@@ -9,14 +9,11 @@ namespace Pirita.Objects {
         public SpriteFont Font;
         public string Str;
         public Color Color;
-        public float Scale;
-        public float Rotation;
-        public Vector2 Origin;
 
         public Text(string text, SpriteFont font, Color color, float scale = 1, float rotation = 0) {
             Str = text;
             Font = font;
-            Scale = scale;
+            Scale = new Vector2(scale, scale);
             Color = color;
             Rotation = rotation;
         }
