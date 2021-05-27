@@ -18,10 +18,10 @@ namespace Pirita {
         private int _DesignedResolutionHeight;
         private float _designedResolutionAspectRatio;
 
-        public PiritaGame(int width, int height, Scene firstScene) {
+        public PiritaGame(int width, int height, Scene firstScene, bool isMouseVisible = false) {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = isMouseVisible;
 
             _firstScene = firstScene;
             _DesignedResolutionWidth = width;
