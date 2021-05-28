@@ -15,12 +15,13 @@ namespace Pirita.Collision {
         public float Width { get => Math.Abs(_width * Scale.X); set => _width = value; }
         public float Height { get => Math.Abs(_height * Scale.Y); set => _height = value; }
         public Vector2 Scale { get; set; } = Vector2.One;
+        public Vector2 Origin { get; set; } = Vector2.Zero;
 
         public Rectangle Rectangle {
             get {
                 return new Rectangle(
-                    (int)(Position.X - (Scale.X < 0 ? Width : 0)), 
-                    (int)(Position.Y - (Scale.Y < 0 ? Height : 0)), 
+                    (int)(Position.X - Origin.X - (Scale.X < 0 ? Width - Origin.X : 0)), 
+                    (int)(Position.Y - Origin.Y - (Scale.Y < 0 ? Height - Origin.Y : 0)), 
                     (int)Width, (int) Height
                 );
             }

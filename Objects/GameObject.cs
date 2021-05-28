@@ -54,6 +54,7 @@ namespace Pirita.Objects {
             get {
                 foreach (var hb in _hitboxes) {
                     hb.Scale = Scale;
+                    hb.Origin = Origin;
                 }
 
                 return _hitboxes;
