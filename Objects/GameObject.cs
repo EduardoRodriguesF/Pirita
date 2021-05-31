@@ -20,7 +20,7 @@ namespace Pirita.Objects {
 
         public event EventHandler<Event> OnObjectChanged;
 
-        public bool Destroyed { get; private set; }
+        public bool Destroyed { get; protected set; }
 
         public virtual int Width {
             get {
