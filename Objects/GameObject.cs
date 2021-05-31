@@ -20,7 +20,7 @@ namespace Pirita.Objects {
 
         public event EventHandler<Event> OnObjectChanged;
 
-        public bool Destroyed { get; private set; }
+        public bool Destroyed { get; protected set; }
 
         public virtual int Width {
             get {
@@ -54,6 +54,7 @@ namespace Pirita.Objects {
             get {
                 foreach (var hb in _hitboxes) {
                     hb.Scale = Scale;
+                    hb.Origin = Origin;
                 }
 
                 return _hitboxes;
@@ -100,7 +101,8 @@ namespace Pirita.Objects {
                 if (_animationManager != null) {
                     _animationManager.Render(spriteBatch, Origin, Scale, Opacity, Rotation);
                 } else {
-                    spriteBatch.Draw(_textures[0], _position, new Rectangle(0, 0, Width, Height), Color.White * Opacity, Rotation, Origin, Scale, SpriteEffects.None, 0f);
+                    var inverted = Scale.X < 0 ? 1 : 0;
+                    spriteBatch.Draw(_textures[0], _position, new Rectangle(0, 0, Width, Height), Color.White * Opacity, Rotation, Origin, new Vector2(Math.Abs(Scale.X), Math.Abs(Scale.Y)), (SpriteEffects)inverted, 0f);
                 }
             }
         }
