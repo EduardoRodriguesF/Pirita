@@ -111,7 +111,7 @@ namespace Pirita {
         }
 
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.SetRenderTarget(_renderTarget);
+            GraphicsDevice.SetRenderTargets(_renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _currentScene.Render(_spriteBatch);
