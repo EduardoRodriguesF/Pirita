@@ -18,6 +18,9 @@ namespace Pirita.Objects {
         }
         public Vector2 Origin { get => _origin; set => _origin = value; }
 
+        public abstract int Width { get; }
+        public abstract int Height { get; }
+
         public abstract void Render(SpriteBatch spriteBatch);
     }
 }

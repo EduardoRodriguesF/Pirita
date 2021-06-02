@@ -22,14 +22,15 @@ namespace Pirita.Objects {
 
         public bool Destroyed { get; protected set; }
 
-        public virtual int Width {
+        public override int Width {
             get {
                 if (_textures != null) return _textures[0].Width;
                 else if (_animationManager != null) return _animations[0].FrameWidth;
                 return 0;
             }
         }
-        public virtual int Height {
+
+        public override int Height {
             get {
                 if (_textures != null) return _textures[0].Height;
                 else if (_animationManager != null) return _animations[0].FrameHeight;
