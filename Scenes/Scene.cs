@@ -19,6 +19,7 @@ namespace Pirita.Scenes {
 
         protected InputManager InputManager { get; set; }
         protected SoundManager SoundManager { get; set; }
+        protected LayerManager LayerManager { get; set; }
 
         protected Camera Camera { get; set; }
 
@@ -35,6 +36,7 @@ namespace Pirita.Scenes {
 
             SetInputManager();
             SetSoundManager();
+            SetLayerManager();
             SetCamera();
         }
 
@@ -45,6 +47,10 @@ namespace Pirita.Scenes {
         protected abstract void SetInputManager();
         protected virtual void SetSoundManager() {
             SoundManager = new SoundManager();
+        }
+
+        public virtual void SetLayerManager() {
+            LayerManager = new LayerManager();
         }
 
         protected virtual void SetCamera() {
@@ -101,22 +107,19 @@ namespace Pirita.Scenes {
 
         public void Render(SpriteBatch spriteBatch) {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
-            var orderedList = _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex);
 
-            foreach (var obj in orderedList) {
-                if (RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
-                    obj.Render(spriteBatch);
-
-                    if (_debug) {
-                        obj.RenderHitbox(spriteBatch, Color.Red, 1);
-                        obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
+            foreach (var layer in LayerManager.Layers) { 
+                foreach (var obj in layer.Objects) {
+                    if (RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
+                        obj.Render(spriteBatch);
                     }
                 }
             }
 
             if (_debug) {
-                foreach (var obj in orderedList) {
+                foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
                     obj.RenderHitbox(spriteBatch, Color.Red, 1);
+                    obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
                 }
             }
 
@@ -136,11 +139,30 @@ namespace Pirita.Scenes {
         }
 
         protected void AddObject(GameObject gameObject) {
+            AddObject(gameObject, 0);
+        }
+
+        protected void AddObject(GameObject gameObject, int depth) {
             _gameObjects.Add(gameObject);
+
+            var layer = LayerManager.Layers.Find(l => l.Depth == depth);
+
+            if (layer == null) {
+                LayerManager.AddLayer(depth);
+                layer = LayerManager.Layers.Find(l => l.Depth == depth);
+            }
+
+            layer.AddObject(gameObject);
         }
 
         protected void RemoveObject(GameObject gameObject) {
             _gameObjects.Remove(gameObject);
+            foreach (var layer in LayerManager.Layers) {
+                if (layer.Objects.Contains(gameObject)) {
+                    layer.RemoveObject(gameObject);
+                    break;
+                }
+            }
         }
 
         protected List<T> CleanObjects<T>(List<T> objectList) where T : GameObject {

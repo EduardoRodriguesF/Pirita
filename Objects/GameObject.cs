@@ -50,7 +50,7 @@ namespace Pirita.Objects {
                 }
             }
         }
-
+            
         public List<Hitbox> Hitboxes {
             get {
                 foreach (var hb in _hitboxes) {
