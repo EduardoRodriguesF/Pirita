@@ -145,14 +145,15 @@ namespace Pirita.Scenes {
         protected void AddObject(GameObject gameObject, int depth) {
             _gameObjects.Add(gameObject);
 
-            var layer = LayerManager.Layers.Find(l => l.Depth == depth);
-
-            if (layer == null) {
-                LayerManager.AddLayer(depth);
-                layer = LayerManager.Layers.Find(l => l.Depth == depth);
-            }
+            var layer = LayerManager.FindLayer(depth);
 
             layer.AddObject(gameObject);
+        }
+
+        protected void AddDrawableObject(Drawable obj, int depth) {
+            var layer = LayerManager.FindLayer(depth);
+
+            layer.AddObject(obj);
         }
 
         protected void RemoveObject(GameObject gameObject) {

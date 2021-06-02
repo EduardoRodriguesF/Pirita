@@ -22,6 +22,17 @@ namespace Pirita.Scenes {
             _layerList = _layerList.OrderBy(l => l.Depth).ToList();
         }
 
+        public Layer FindLayer(int depth) {
+            var layer = Layers.Find(l => l.Depth == depth);
+
+            if (layer == null) {
+                AddLayer(depth);
+                layer = Layers.Find(l => l.Depth == depth);
+            }
+
+            return layer;
+        }
+
         public void RemoveLayer(int depth) {
             RemoveLayer(_layerList.Find(l => l.Depth == depth));
         }
