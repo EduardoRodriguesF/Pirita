@@ -14,7 +14,7 @@ namespace Pirita.Scenes {
         private bool _debug = false;
 
         private ContentManager _contentManager;
-        protected int _viewportWidth, _viewportHeight;
+        protected Viewport _viewport;
         protected readonly List<GameObject> _gameObjects = new List<GameObject>();
 
         protected InputManager InputManager { get; set; }
@@ -29,8 +29,7 @@ namespace Pirita.Scenes {
 
         public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight) {
             _contentManager = contentManager;
-            _viewportWidth = viewportWidth;
-            _viewportHeight = viewportHeight;
+            _viewport = new Viewport(0, 0, viewportWidth, viewportHeight);
 
             RenderArea = new Rectangle(0, 0, viewportWidth, viewportHeight);
 
@@ -44,8 +43,13 @@ namespace Pirita.Scenes {
         public abstract void HandleInput(GameTime gameTime);
 
         protected abstract void SetInputManager();
-        protected abstract void SetSoundManager();
-        protected abstract void SetCamera();
+        protected virtual void SetSoundManager() {
+            SoundManager = new SoundManager();
+        }
+
+        protected virtual void SetCamera() {
+            Camera = new Camera(_viewport);
+        }
 
         public void UnloadContent() {
             _contentManager.Unload();
@@ -89,10 +93,10 @@ namespace Pirita.Scenes {
         }
 
         protected void UpdateRenderArea() {
-            RenderArea.X = (int)(Camera.Position.X - (_viewportWidth / Camera.Zoom / 2));
-            RenderArea.Y = (int)(Camera.Position.Y - (_viewportHeight / Camera.Zoom / 2));
-            RenderArea.Width = (int)(_viewportWidth / Camera.Zoom);
-            RenderArea.Height = (int)(_viewportHeight / Camera.Zoom);
+            RenderArea.X = (int)(Camera.Position.X - (_viewport.Width / Camera.Zoom / 2));
+            RenderArea.Y = (int)(Camera.Position.Y - (_viewport.Height / Camera.Zoom / 2));
+            RenderArea.Width = (int)(_viewport.Width / Camera.Zoom);
+            RenderArea.Height = (int)(_viewport.Height / Camera.Zoom);
         }
 
         public void Render(SpriteBatch spriteBatch) {
