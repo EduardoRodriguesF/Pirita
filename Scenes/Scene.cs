@@ -92,8 +92,9 @@ namespace Pirita.Scenes {
 
         public void Render(SpriteBatch spriteBatch) {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
+            var orderedList = _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex);
 
-            foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
+            foreach (var obj in orderedList) {
                 if (RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
                     obj.Render(spriteBatch);
 
@@ -104,8 +105,8 @@ namespace Pirita.Scenes {
                 }
             }
 
-            foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
-                if (_debug) {
+            if (_debug) {
+                foreach (var obj in orderedList) {
                     obj.RenderHitbox(spriteBatch, Color.Red, 1);
                 }
             }
