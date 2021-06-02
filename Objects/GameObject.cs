@@ -16,7 +16,7 @@ namespace Pirita.Objects {
 
         protected Vector2 _position;
 
-        protected List<Hitbox> _hitboxes = new List<Hitbox>();
+        private List<Hitbox> _hitboxes = new List<Hitbox>();
 
         public event EventHandler<Event> OnObjectChanged;
 
