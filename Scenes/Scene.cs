@@ -22,7 +22,7 @@ namespace Pirita.Scenes {
 
         protected Camera Camera { get; set; }
 
-        protected Rectangle RenderArea { get; set; }
+        protected Rectangle RenderArea;
 
         public event EventHandler<Scene> OnSceneSwitched;
         public event EventHandler<Event> OnEventNotification;
@@ -31,6 +31,8 @@ namespace Pirita.Scenes {
             _contentManager = contentManager;
             _viewportWidth = viewportWidth;
             _viewportHeight = viewportHeight;
+
+            RenderArea = new Rectangle(0, 0, viewportWidth, viewportHeight);
 
             SetInputManager();
             SetSoundManager();
@@ -81,13 +83,16 @@ namespace Pirita.Scenes {
             if (InputManager != null) InputManager.Update();
             HandleInput(gameTime);
 
-            RenderArea = new Rectangle(
-                (int)(Camera.Position.X - (_viewportWidth / Camera.Zoom / 2)),
-                (int)(Camera.Position.Y - (_viewportHeight / Camera.Zoom / 2)),
-                (int)(_viewportWidth / Camera.Zoom), (int)(_viewportHeight / Camera.Zoom)
-            );
+            UpdateRenderArea();
 
             UpdateGameState(gameTime);
+        }
+
+        protected void UpdateRenderArea() {
+            RenderArea.X = (int)(Camera.Position.X - (_viewportWidth / Camera.Zoom / 2));
+            RenderArea.Y = (int)(Camera.Position.Y - (_viewportHeight / Camera.Zoom / 2));
+            RenderArea.Width = (int)(_viewportWidth / Camera.Zoom);
+            RenderArea.Height = (int)(_viewportHeight / Camera.Zoom);
         }
 
         public void Render(SpriteBatch spriteBatch) {
