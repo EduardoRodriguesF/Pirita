@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirita.Scenes {
     public class Camera {
+        private float _zoom, _previousZoom;
+
         public float Zoom { get; set; }
         public Vector2 Position { get; set; }
         public Rectangle Bounds { get; protected set; }
@@ -10,7 +12,6 @@ namespace Pirita.Scenes {
         public Matrix Transform { get; protected set; }
         public Vector2 Target { get; set; }
 
-        private float zoom, previousZoom;
 
         public Camera(Viewport viewport) {
             Bounds = viewport.Bounds;
@@ -58,6 +59,10 @@ namespace Pirita.Scenes {
             }
         }
 
+        public void AdjustPort(int viewportSize, int sizeToAchieve) {
+            Zoom = viewportSize / (float)sizeToAchieve;
+        }
+
         public void UpdateCamera(Viewport bounds) {
             Bounds = bounds.Bounds;
             UpdateMatrix();
@@ -68,8 +73,8 @@ namespace Pirita.Scenes {
                 cameraMovement = Target;
             }
 
-            previousZoom = zoom;
-            zoom = Zoom;
+            _previousZoom = _zoom;
+            _zoom = Zoom;
 
             Position = Target;
         }
