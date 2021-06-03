@@ -8,6 +8,7 @@ using Pirita.Sound;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pirita.UI;
 
 namespace Pirita.Scenes {
     public abstract class Scene {
@@ -22,6 +23,7 @@ namespace Pirita.Scenes {
         protected LayerManager LayerManager { get; set; }
 
         protected Camera Camera { get; set; }
+        protected Hud Hud { get; set; }
 
         protected Rectangle RenderArea;
 
@@ -38,6 +40,7 @@ namespace Pirita.Scenes {
             SetSoundManager();
             SetLayerManager();
             SetCamera();
+            SetHud();
         }
 
         public abstract void LoadContent();
@@ -55,6 +58,10 @@ namespace Pirita.Scenes {
 
         protected virtual void SetCamera() {
             Camera = new Camera(_viewport);
+        }
+
+        protected virtual void SetHud() {
+            Hud = new Hud(_viewport);
         }
 
         public void UnloadContent() {
@@ -96,6 +103,9 @@ namespace Pirita.Scenes {
             UpdateRenderArea();
 
             UpdateGameState(gameTime);
+
+            Camera.UpdateCamera(_viewport);
+            Hud.Update(Camera.Position, Camera.Zoom);
         }
 
         protected void UpdateRenderArea() {
@@ -115,6 +125,8 @@ namespace Pirita.Scenes {
                     }
                 }
             }
+
+            Hud.Render(spriteBatch);
 
             if (_debug) {
                 foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {

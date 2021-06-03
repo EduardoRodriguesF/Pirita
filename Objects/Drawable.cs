@@ -9,6 +9,7 @@ namespace Pirita.Objects {
         private Vector2 _origin;
 
         public int zIndex;
+        public virtual Vector2 InitialPosition { get; set; }
         public virtual Vector2 Position { get; set; }
         public float Opacity { get => _opacity; set => _opacity = value; }
         public Vector2 Scale { get => _scale; set => _scale = value; }
