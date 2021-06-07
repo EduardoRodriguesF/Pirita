@@ -17,9 +17,9 @@ namespace Pirita.Collision {
             return DetectCollisions(activeObject, activeObject.Position, collisionHandler);
         }
 
-        public bool DetectCollisions(A activeObject, Vector2 pos, Action<P, A> collisionHandler = null) {
+        public bool DetectCollisions(A activeObject, Vector2 offset, Action<P, A> collisionHandler = null) {
             foreach (var passiveObject in _passiveObjects) {
-                if (DetectCollision(passiveObject, activeObject, pos)) {
+                if (DetectCollision(passiveObject, activeObject, offset)) {
                     if (collisionHandler != null) collisionHandler(passiveObject, activeObject);
                     return true;
                 }
@@ -56,10 +56,10 @@ namespace Pirita.Collision {
             return false;
         }
 
-        private bool DetectCollision(P passiveObject, A activeObject, Vector2 pos) {
+        private bool DetectCollision(P passiveObject, A activeObject, Vector2 offset) {
             foreach (var passiveHB in passiveObject.Hitboxes) {
                 foreach (var activeHB in activeObject.Hitboxes) {
-                    return activeHB.CollidesWith(passiveHB, pos);
+                    return activeHB.CollidesWith(passiveHB, offset);
                 }
             }
 

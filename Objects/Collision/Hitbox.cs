@@ -34,13 +34,13 @@ namespace Pirita.Collision {
         }
 
         public bool CollidesWith(Hitbox otherHB) {
-            var pos = new Vector2(Rectangle.X, Rectangle.Y);
-
-            return CollidesWith(otherHB, pos);
+            return CollidesWith(otherHB, Vector2.Zero);
         }
 
-        public bool CollidesWith(Hitbox otherHB, Vector2 pos) {
+        public bool CollidesWith(Hitbox otherHB, Vector2 offset) {
             var other = otherHB.Rectangle;
+            var pos = offset + Position;
+            pos -= Origin;
 
             return
                 (pos.X < other.X + other.Width &&
@@ -50,11 +50,13 @@ namespace Pirita.Collision {
         }
 
         public bool CollidesWith(Vector2 p) {
+            var rect = Rectangle;
+
             return
-                (p.X < Position.X + Width &&
-                p.X > Position.X &&
-                p.Y < Position.Y + Height &&
-                p.Y > Position.Y);
+                (p.X < rect.X + Width &&
+                p.X > rect.X &&
+                p.Y < rect.Y + Height &&
+                p.Y > rect.Y);
         }
     }
 }
