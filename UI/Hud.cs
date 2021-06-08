@@ -23,12 +23,13 @@ namespace Pirita.UI {
 
             foreach (var element in _hudElements) {
                 element.Position = element.InitialPosition + cameraPos;
-                element.Scale = scaleVect;
+                element.Scale = scaleVect * element.InitialScale;
             }
         }
 
         public void AddElement(Drawable element) {
             element.InitialPosition = element.Position;
+            element.InitialScale = element.Scale;
             _hudElements.Add(element);
         }
 

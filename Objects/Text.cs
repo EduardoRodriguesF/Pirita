@@ -21,7 +21,7 @@ namespace Pirita.Objects {
         public Text(string text, SpriteFont font, Color color, float scale = 1, float rotation = 0) {
             Str = text;
             Font = font;
-            Scale = new Vector2(scale, scale);
+            Scale = new Vector2(scale);
             Color = color;
             Rotation = rotation;
         }
