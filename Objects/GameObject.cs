@@ -98,7 +98,7 @@ namespace Pirita.Objects {
         public virtual void PostUpdate(GameTime gameTime) { }
 
         public override void Render(SpriteBatch spriteBatch) {
-            if (!Destroyed) {
+            if (!Destroyed && Visible) {
                 if (_animationManager != null) {
                     _animationManager.Render(spriteBatch, Origin, Scale, Opacity, Rotation);
                 } else {

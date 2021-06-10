@@ -120,7 +120,7 @@ namespace Pirita.Scenes {
 
             foreach (var layer in LayerManager.Layers) { 
                 foreach (var obj in layer.Objects) {
-                    if (RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
+                    if (obj.Visible && RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
                         obj.Render(spriteBatch);
                     }
                 }
