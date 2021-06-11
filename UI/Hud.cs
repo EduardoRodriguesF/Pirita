@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Objects;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pirita.UI {
     public class Hud {

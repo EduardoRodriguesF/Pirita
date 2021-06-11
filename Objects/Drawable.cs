@@ -15,7 +15,7 @@ namespace Pirita.Objects {
         public virtual Vector2 Position { get; set; }
         public float Opacity { get => _opacity; set => _opacity = value; }
         public Vector2 Scale { get => _scale; set => _scale = value; }
-        public float Rotation { 
+        public float Rotation {
             get => _rotation;
             set => _rotation = -value * MathHelper.PiOver4;
         }

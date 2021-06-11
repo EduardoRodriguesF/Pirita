@@ -50,7 +50,7 @@ namespace Pirita.Objects {
                 }
             }
         }
-            
+
         public List<Hitbox> Hitboxes {
             get {
                 foreach (var hb in _hitboxes) {
@@ -116,8 +116,8 @@ namespace Pirita.Objects {
             }
 
             foreach (var hb in _hitboxes) {
-                int xPos = (int) (hb.Rectangle.X);
-                int yPos = (int) (hb.Rectangle.Y);
+                int xPos = (int)(hb.Rectangle.X);
+                int yPos = (int)(hb.Rectangle.Y);
 
                 spriteBatch.Draw(_debugTexture, new Rectangle(xPos, yPos, lineWidth, hb.Rectangle.Height + lineWidth), color);
                 spriteBatch.Draw(_debugTexture, new Rectangle(xPos, yPos, hb.Rectangle.Width + lineWidth, lineWidth), color);

@@ -15,7 +15,7 @@ namespace Pirita.Pools {
         // Ensures object isn't freed twice.
         bool PoolIsFree { get; set; }
 
-        public class Pool<T> where T : IPoolable, new () {
+        public class Pool<T> where T : IPoolable, new() {
             private Stack _stack;
             private int _capacity; // Variable for debug purpose
 

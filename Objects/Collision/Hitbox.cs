@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Diagnostics;
 
 namespace Pirita.Collision {
     public class Hitbox {
@@ -20,9 +19,9 @@ namespace Pirita.Collision {
         public Rectangle Rectangle {
             get {
                 return new Rectangle(
-                    (int)(Position.X - Origin.X - (Scale.X < 0 ? Width - Origin.X : 0)), 
-                    (int)(Position.Y - Origin.Y - (Scale.Y < 0 ? Height - Origin.Y : 0)), 
-                    (int)Width, (int) Height
+                    (int)(Position.X - Origin.X - (Scale.X < 0 ? Width - Origin.X : 0)),
+                    (int)(Position.Y - Origin.Y - (Scale.Y < 0 ? Height - Origin.Y : 0)),
+                    (int)Width, (int)Height
                 );
             }
         }

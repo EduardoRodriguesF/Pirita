@@ -1,10 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Pirita.Objects;
-using System;
+﻿using Pirita.Objects;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace Pirita.Scenes {
     public class Layer {

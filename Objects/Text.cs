@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pirita.Objects {
     public class Text : Drawable {
@@ -10,12 +7,12 @@ namespace Pirita.Objects {
         public string Str;
         public Color Color;
 
-        public override int Width { 
+        public override int Width {
             get => (int)Font.MeasureString(Str).X;
         }
 
-        public override int Height { 
-            get => (int)Font.MeasureString(Str).Y; 
+        public override int Height {
+            get => (int)Font.MeasureString(Str).Y;
         }
 
         public Text(string text, SpriteFont font, Color color, float scale = 1, float rotation = 0) {

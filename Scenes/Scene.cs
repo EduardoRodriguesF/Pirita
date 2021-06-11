@@ -2,13 +2,13 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Objects;
 using Pirita.Input;
+using Pirita.Objects;
 using Pirita.Sound;
+using Pirita.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Pirita.UI;
 
 namespace Pirita.Scenes {
     public abstract class Scene {
@@ -130,7 +130,7 @@ namespace Pirita.Scenes {
         public void Render(SpriteBatch spriteBatch) {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
 
-            foreach (var layer in LayerManager.Layers) { 
+            foreach (var layer in LayerManager.Layers) {
                 foreach (var obj in layer.Objects) {
                     if (obj.Visible && RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
                         obj.Render(spriteBatch);
