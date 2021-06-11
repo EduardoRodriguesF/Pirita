@@ -82,6 +82,9 @@ namespace Pirita {
                 case Event.GameQuit _:
                     Exit();
                     break;
+                case Event.DebugToggle _:
+                    _currentScene.ToggleDebug();
+                    break;
             }
         }
 
@@ -104,9 +107,6 @@ namespace Pirita {
         protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            if (Keyboard.GetState().IsKeyDown(Keys.F11))
-                _currentScene.ToggleDebug();
 
             _currentScene.Update(gameTime);
 

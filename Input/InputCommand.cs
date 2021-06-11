@@ -1,3 +1,5 @@
 ﻿namespace Pirita.Input {
-    public class InputCommand { }
+    public class InputCommand {
+        public class DebugToggle : InputCommand { }
+    }
 }

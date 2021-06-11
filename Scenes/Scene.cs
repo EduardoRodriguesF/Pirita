@@ -45,7 +45,15 @@ namespace Pirita.Scenes {
 
         public abstract void LoadContent();
 
-        public abstract void HandleInput(GameTime gameTime);
+        public virtual void HandleInput(GameTime gameTime) {
+            if (InputManager == null) return;
+
+            InputManager.GetCommands(cmd => {
+                if (cmd is InputCommand.DebugToggle) {
+                    NotifyEvent(new Event.DebugToggle());
+                }
+            });
+        }
 
         protected abstract void SetInputManager();
         protected virtual void SetSoundManager() {

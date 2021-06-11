@@ -25,7 +25,12 @@ namespace Pirita.Input {
         }
 
         public virtual IEnumerable<InputCommand> GetKeyboardState(KeyboardState state, KeyboardState oldState) {
-            return new List<InputCommand>();
+            var commands = new List<InputCommand>();
+
+            if (Pressed(Keys.F3, state, oldState))
+                commands.Add(new InputCommand.DebugToggle());
+
+            return commands;
         }
 
         public virtual IEnumerable<InputCommand> GetMouseState(MouseState state, MouseState oldState) {
