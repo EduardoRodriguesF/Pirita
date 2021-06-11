@@ -189,7 +189,7 @@ namespace Pirita.Scenes {
             return listOfItemsToKeep;
         }
 
-        protected void ToggleDebug() {
+        public void ToggleDebug() {
             _debug = !_debug;
         }
     }
