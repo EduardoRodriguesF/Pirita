@@ -10,5 +10,9 @@
             }
             return from;
         }
+
+        public static float Lerp(float from, float to, float amount) {
+            return from + (to - from) * amount;
+        }
     }
 }
