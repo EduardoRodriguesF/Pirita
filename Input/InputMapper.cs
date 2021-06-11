@@ -30,6 +30,9 @@ namespace Pirita.Input {
             if (Pressed(Keys.F3, state, oldState))
                 commands.Add(new InputCommand.DebugToggle());
 
+            if (Pressed(Keys.F11, state, oldState))
+                commands.Add(new InputCommand.FullscreenToggle());
+
             return commands;
         }
 

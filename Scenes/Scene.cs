@@ -18,6 +18,8 @@ namespace Pirita.Scenes {
         protected Viewport _viewport;
         protected readonly List<GameObject> _gameObjects = new List<GameObject>();
 
+        public Viewport Viewport { get => _viewport; set => _viewport = value; }
+
         protected InputManager InputManager { get; set; }
         protected SoundManager SoundManager { get; set; }
         protected LayerManager LayerManager { get; set; }
@@ -51,6 +53,8 @@ namespace Pirita.Scenes {
             InputManager.GetCommands(cmd => {
                 if (cmd is InputCommand.DebugToggle) {
                     NotifyEvent(new Event.DebugToggle());
+                } else if (cmd is InputCommand.FullscreenToggle) {
+                    NotifyEvent(new Event.FullscreenToggle());
                 }
             });
         }
