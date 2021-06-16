@@ -37,7 +37,15 @@ namespace Pirita.Input {
         }
 
         public virtual IEnumerable<InputCommand> GetMouseState(MouseState state, MouseState oldState) {
-            return new List<InputCommand>();
+            var commands = new List<InputCommand>();
+
+            if (Pressed(state.LeftButton, oldState.LeftButton))
+                commands.Add(new InputCommand.LClick());
+
+            if (Pressed(state.RightButton, oldState.RightButton))
+                commands.Add(new InputCommand.RClick());
+
+            return commands;
         }
 
         public virtual IEnumerable<InputCommand> GetGamePadState(GamePadState state, GamePadState oldState) {
