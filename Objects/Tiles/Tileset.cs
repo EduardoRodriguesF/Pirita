@@ -12,7 +12,7 @@ namespace Pirita.Objects.Tiles {
 
         // Tile size
         public override int Width => _texture.Width / 8;
-        public override int Height => _texture.Height / 7;
+        public override int Height => _texture.Height / 6;
 
         public Tileset(Texture2D texture) {
             _texture = texture;
