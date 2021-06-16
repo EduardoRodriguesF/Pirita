@@ -19,15 +19,17 @@ namespace Pirita.Objects.Tiles {
         }
 
         public void AddTile(float x, float y) {
-            new Tile(x, y);
+            Tiles.Add(new Tile(x, y));
+            CheckConnections();
         }
 
         public void AddTiles(List<Tile> tiles) {
             Tiles.AddRange(tiles);
+            CheckConnections();
         }
 
         /// <summary>Goes though each tile checking for other tiles next to each other to change its source position</summary>
-        public virtual void CheckConnections() { }
+        protected virtual void CheckConnections() { }
 
         public override void Render(SpriteBatch spriteBatch) {
             foreach (var tile in Tiles) {
