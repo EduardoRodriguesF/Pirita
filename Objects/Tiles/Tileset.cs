@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Pirita.Objects;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Pirita.Objects.Tiles {
+namespace Pirita.Tiles {
     public class Tileset : Drawable {
         protected Texture2D _texture { get; private set; } // Tileset spritesheet
 
@@ -16,10 +15,11 @@ namespace Pirita.Objects.Tiles {
 
         public Tileset(Texture2D texture) {
             _texture = texture;
+            Tiles = new List<Tile>();
         }
 
-        public void AddTile(float x, float y) {
-            Tiles.Add(new Tile(x, y));
+        public void AddTile(int x, int y) {
+            Tiles.Add(new Tile(x * Width, y * Height));
             CheckConnections();
         }
 

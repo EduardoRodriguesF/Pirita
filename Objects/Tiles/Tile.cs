@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pirita.Objects.Tiles {
+namespace Pirita.Tiles {
     public class Tile {
         public Vector2 Position { get; private set; }
         public Vector2 Source { get; set; }
