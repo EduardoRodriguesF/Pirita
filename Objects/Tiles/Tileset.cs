@@ -29,7 +29,171 @@ namespace Pirita.Tiles {
         }
 
         /// <summary>Goes though each tile checking for other tiles next to each other to change its source position</summary>
-        protected virtual void CheckConnections() { }
+        protected virtual void CheckConnections() {
+            var middleOffset = new Vector2(Width, Height) / 2;
+
+            foreach (var tile in Tiles) {
+                Vector2 source = new Vector2(6, 5);
+                var nearbyTiles = Tiles.FindAll(t => Vector2.Distance(tile.Position, t.Position) < Height*2);
+
+                if (nearbyTiles.Count <= 0) {
+                    tile.Source = source * new Vector2(Width, Height);
+                    continue;
+                }
+
+                bool topLeft, top, topRight,
+                    left, right,
+                    bottomLeft, bottom, bottomRight;
+
+                topLeft = TileAt(-1, -1);
+                top = TileAt(0, -1);
+                topRight = TileAt(1, -1);
+
+                left = TileAt(-1, 0);
+                right = TileAt(1, 0);
+
+                bottomLeft = TileAt(-1, 1);
+                bottom = TileAt(0, 1);
+                bottomRight = TileAt(1, 1);
+
+                if (left) {
+                    SetSource(5, 5);
+                    if (top) {
+                        SetSource(7, 4);
+                        if (topLeft) {
+                            SetSource(6, 4);
+                            if (right) {
+                                SetSource(6, 3);
+                                if (topRight) {
+                                    SetSource(4, 3);
+                                    if (bottom) {
+                                        SetSource(4, 1);
+                                        if (bottomRight) {
+                                            SetSource(0, 1);
+                                            if (bottomLeft) {
+                                                SetSource(0, 0);
+                                            }
+                                        }
+                                    }
+                                } else if (bottom) {
+                                    SetSource(6, 1);
+                                    if (bottomRight) {
+                                        SetSource(2, 1);
+                                        if (bottomLeft) {
+                                            SetSource(2, 0);
+                                        }
+                                    } else if (bottomLeft) {
+                                        SetSource(6, 0);
+                                    }
+                                }
+                            } else if (bottom) {
+                                SetSource(1, 3);
+                                if (bottomLeft) {
+                                    SetSource(0, 3);
+                                }
+                            }
+                        } else if (right) {
+                            SetSource(7, 3);
+                            if (bottom) {
+                                SetSource(7, 1);
+                                if (bottomLeft) {
+                                    SetSource(7, 0);
+                                    if (topRight) {
+                                        SetSource(5, 0);
+                                        if (bottomRight) {
+                                            SetSource(1, 0);
+                                        } else if (topLeft) {
+                                            SetSource(4, 0);
+                                        }
+                                    } else if (bottomRight) {
+                                        SetSource(3, 0);
+                                    }
+                                } else if (topRight) {
+                                    SetSource(5, 1);
+                                    if (bottomRight) {
+                                        SetSource(1, 1);
+                                    }
+                                } else if (bottomRight) {
+                                    SetSource(3, 1);
+                                }
+                            } else if (topRight) {
+                                SetSource(5, 3);
+                            }
+                        } else if (bottom) {
+                            SetSource(3, 3);
+                            if (bottomLeft) {
+                                SetSource(2, 3);
+                            }
+                        }
+                    } else if (bottom) {
+                        SetSource(5, 4);
+                        if (bottomLeft) {
+                            SetSource(4, 4);
+                            if (right) {
+                                SetSource(5, 2);
+                                if (bottomRight) {
+                                    SetSource(4, 2);
+                                }
+                            }
+                        } else if (right) {
+                            SetSource(7, 2);
+                            if (bottomRight) {
+                                SetSource(6, 2);
+                            }
+                        }
+                    } else if (right) {
+                        SetSource(1, 4);
+                    }
+                } else if (right) {
+                    SetSource(3, 5);
+                    if (top) {
+                        SetSource(1, 5);
+                        if (topRight) {
+                            SetSource(0, 5);
+                            if (bottom) {
+                                SetSource(2, 2);
+                                if (bottomRight) {
+                                    SetSource(0, 2);
+                                }
+                            }
+                        } else if (bottom) {
+                            SetSource(3, 2);
+                            if (bottomRight) {
+                                SetSource(1, 2);
+                            }
+                        }
+                    } else if (bottom) {
+                        SetSource(3, 4);
+                        if (bottomRight) {
+                            SetSource(2, 4);
+                        }
+                    }
+                } else if (top) {
+                    SetSource(4, 5);
+                    if (bottom) {
+                        SetSource(0, 4);
+                    }
+                } else if (bottom) {
+                    SetSource(2, 5);
+                }
+
+                tile.Source = source * new Vector2(Width, Height);
+
+                bool TileAt(int x, int y) {
+                    var foundTile = nearbyTiles.Find(t => t.Position == new Vector2(tile.Position.X + (Width*x), tile.Position.Y + (Height*y)));
+
+                    nearbyTiles.Remove(foundTile);
+
+                    return foundTile != null;
+                }
+
+                void SetSource(int x, int y) {
+                    source.X = x;
+                    source.Y = y;
+                }
+            }
+
+        }
 
         public override void Render(SpriteBatch spriteBatch) {
             foreach (var tile in Tiles) {
