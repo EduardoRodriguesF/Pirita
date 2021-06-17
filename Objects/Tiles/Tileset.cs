@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Objects;
 using System.Collections.Generic;
-using System.Diagnostics;
+using static Pirita.Pools.IPoolable;
 
 namespace Pirita.Tiles {
     public class Tileset : Drawable {
         protected Texture2D _texture { get; private set; } // Tileset spritesheet
 
+        private Pool<Tile> _tilePool;
         public List<Tile> Tiles { get; private set; }
 
         // Tile size
@@ -16,20 +17,28 @@ namespace Pirita.Tiles {
 
         public Tileset(Texture2D texture) {
             _texture = texture;
+            _tilePool = new Pool<Tile>(64);
             Tiles = new List<Tile>();
         }
 
         public void AddTile(int x, int y) {
-            var tile = new Tile(x * Width, y * Height);
+            var tile = _tilePool.Get();
+            tile.Position = new Vector2(x * Width, y * Height);
 
             if (Tiles.Find(t => t.Position == tile.Position) != null) return;
 
-            Tiles.Add(new Tile(x * Width, y * Height));
+            Tiles.Add(tile);
             CheckConnections();
         }
 
-        public void AddTiles(List<Tile> tiles) {
-            Tiles.AddRange(tiles);
+        public void AddTiles(List<Vector2> positionList) {
+            foreach (var p in positionList) {
+                var tile = _tilePool.Get();
+
+                if (Tiles.Find(t => t.Position == tile.Position) != null) continue;
+
+                Tiles.Add(tile);
+            }
             CheckConnections();
         }
 
