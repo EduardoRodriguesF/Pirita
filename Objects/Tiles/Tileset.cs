@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Objects;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Pirita.Tiles {
     public class Tileset : Drawable {
@@ -19,6 +20,10 @@ namespace Pirita.Tiles {
         }
 
         public void AddTile(int x, int y) {
+            var tile = new Tile(x * Width, y * Height);
+
+            if (Tiles.Find(t => t.Position == tile.Position) != null) return;
+
             Tiles.Add(new Tile(x * Width, y * Height));
             CheckConnections();
         }
@@ -34,7 +39,7 @@ namespace Pirita.Tiles {
 
             foreach (var tile in Tiles) {
                 Vector2 source = new Vector2(6, 5);
-                var nearbyTiles = Tiles.FindAll(t => Vector2.Distance(tile.Position, t.Position) < Height*2);
+                var nearbyTiles = Tiles.FindAll(t => Vector2.Distance(tile.Position, t.Position) < Height * 2);
 
                 if (nearbyTiles.Count <= 0) {
                     tile.Source = source * new Vector2(Width, Height);
@@ -73,6 +78,8 @@ namespace Pirita.Tiles {
                                             if (bottomLeft) {
                                                 SetSource(0, 0);
                                             }
+                                        } else if (bottomLeft) {
+                                            SetSource(4, 0);
                                         }
                                     }
                                 } else if (bottom) {
@@ -180,8 +187,7 @@ namespace Pirita.Tiles {
                 tile.Source = source * new Vector2(Width, Height);
 
                 bool TileAt(int x, int y) {
-                    var foundTile = nearbyTiles.Find(t => t.Position == new Vector2(tile.Position.X + (Width*x), tile.Position.Y + (Height*y)));
-
+                    var foundTile = nearbyTiles.Find(t => t.Position == new Vector2(tile.Position.X + (Width * x), tile.Position.Y + (Height * y)));
                     nearbyTiles.Remove(foundTile);
 
                     return foundTile != null;
