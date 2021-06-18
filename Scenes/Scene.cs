@@ -19,6 +19,7 @@ namespace Pirita.Scenes {
         private readonly List<GameObject> _gameObjects = new List<GameObject>();
 
         public Viewport Viewport { get => _viewport; set => _viewport = value; }
+        public Color BackgroundColor { get; protected set; } = Color.CornflowerBlue;
 
         protected InputManager InputManager { get; set; }
         protected SoundManager SoundManager { get; set; }

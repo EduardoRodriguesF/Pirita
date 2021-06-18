@@ -14,8 +14,6 @@ namespace Pirita {
         private Scene _currentScene;
         private Scene _firstScene;
 
-        private Color _backgroundColor;
-
         private int _DesignedResolutionWidth;
         private int _DesignedResolutionHeight;
         private float _designedResolutionAspectRatio;
@@ -29,8 +27,6 @@ namespace Pirita {
             _DesignedResolutionWidth = width;
             _DesignedResolutionHeight = height;
             _designedResolutionAspectRatio = width / (float)height;
-
-            _backgroundColor = Color.CornflowerBlue;
         }
 
         protected override void Initialize() {
@@ -143,7 +139,7 @@ namespace Pirita {
 
             _spriteBatch.End();*/
 
-            GraphicsDevice.Clear(_backgroundColor);
+            GraphicsDevice.Clear(_currentScene.BackgroundColor);
 
             _currentScene.Render(_spriteBatch);
 
