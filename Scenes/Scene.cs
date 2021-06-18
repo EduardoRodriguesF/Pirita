@@ -163,6 +163,10 @@ namespace Pirita.Scenes {
             return _contentManager.Load<SoundEffect>(soundName);
         }
 
+        protected Effect LoadEffect(string effectName) {
+            return _contentManager.Load<Effect>(effectName);
+        }
+
         protected void AddObject(GameObject gameObject) {
             AddObject(gameObject, 0);
         }
