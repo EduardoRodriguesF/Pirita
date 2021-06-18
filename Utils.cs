@@ -22,6 +22,26 @@
         }
 
         /// <summary>
+        /// Returns a percentage of a value between min and max parameters
+        /// </summary>
+        public static float InvLerp(float min, float max, float value) {
+            return (value - min) / (max - min);
+        }
+
+        /// <summary>
+        /// Returns the remapped value from iMin-iMax range to oMin-oMax range
+        /// </summary>
+        /// <param name="iMin">Input min</param>
+        /// <param name="iMax">Input max</param>
+        /// <param name="oMin">Output min</param>
+        /// <param name="oMax">Output max</param>
+        /// <param name="value">Value between iMin and iMax</param>
+        /// <returns></returns>
+        public static float Remap(float iMin, float iMax, float oMin, float oMax, float value) {
+            return Lerp(oMin, oMax, InvLerp(iMin, iMax, value));
+        }
+
+        /// <summary>
         /// Returns the value wrapped, values over or under will be wrapped around
         /// </summary>
         public static float Wrap(float value, float min, float max) {
