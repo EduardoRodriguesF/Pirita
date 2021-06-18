@@ -15,8 +15,8 @@ namespace Pirita.Scenes {
         private bool _debug = false;
 
         private ContentManager _contentManager;
-        protected Viewport _viewport;
-        protected readonly List<GameObject> _gameObjects = new List<GameObject>();
+        private Viewport _viewport;
+        private readonly List<GameObject> _gameObjects = new List<GameObject>();
 
         public Viewport Viewport { get => _viewport; set => _viewport = value; }
 
