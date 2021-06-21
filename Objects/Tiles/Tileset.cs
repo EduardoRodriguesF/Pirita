@@ -34,6 +34,7 @@ namespace Pirita.Tiles {
         public void AddTiles(List<Vector2> positionList) {
             foreach (var p in positionList) {
                 var tile = _tilePool.Get();
+                tile.Position = new Vector2(p.X * Width, p.Y * Height);
 
                 if (Tiles.Find(t => t.Position == tile.Position) != null) continue;
 
