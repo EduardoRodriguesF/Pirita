@@ -4,11 +4,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Input;
 using Pirita.Objects;
+using Pirita.Pools;
 using Pirita.Sound;
 using Pirita.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Pirita.Pools.IPoolable;
 
 namespace Pirita.Scenes {
     public abstract class Scene {
@@ -195,12 +197,14 @@ namespace Pirita.Scenes {
             }
         }
 
-        protected List<T> CleanObjects<T>(List<T> objectList) where T : GameObject {
+        protected List<T> CleanObjects<T>(List<T> objectList, Pool<T> objectPool = null) where T : GameObject, new() {
             List<T> listOfItemsToKeep = new List<T>();
 
             foreach (T item in objectList) {
-                if (item.Destroyed) RemoveObject(item);
-                else listOfItemsToKeep.Add(item);
+                if (item.Destroyed) {
+                    RemoveObject(item);
+                    if (objectPool != null) objectPool.Release(item);
+                } else listOfItemsToKeep.Add(item);
             }
 
             return listOfItemsToKeep;

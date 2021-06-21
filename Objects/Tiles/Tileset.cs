@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Objects;
+using Pirita.Pools;
 using System.Collections.Generic;
-using static Pirita.Pools.IPoolable;
 
 namespace Pirita.Tiles {
     public class Tileset : Drawable {

@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Animations;
 using Pirita.Collision;
+using Pirita.Pools;
 using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
 
 namespace Pirita.Objects {
-    public class GameObject : Drawable {
+    public class GameObject : Drawable, IPoolable {
         protected List<Texture2D> _textures;
         protected List<Animation> _animations;
         protected AnimationManager _animationManager;
@@ -61,6 +62,11 @@ namespace Pirita.Objects {
                 return _hitboxes;
             }
         }
+
+        public bool PoolIsValid { get; set; }
+        public bool PoolIsFree { get; set; }
+
+        public GameObject() { }
 
         public void SetTextures(List<Texture2D> textures) {
             _textures = textures;
@@ -148,5 +154,11 @@ namespace Pirita.Objects {
         public void Destroy() {
             Destroyed = true;
         }
+
+        public virtual void Initialize() {
+            Destroyed = false;
+        }
+
+        public virtual void Release() { }
     }
 }
