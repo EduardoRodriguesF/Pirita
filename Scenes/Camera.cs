@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirita.Scenes {
     public class Camera {
+        private float _zoom, _previousZoom;
+
         public float Zoom { get; set; }
         public Vector2 Position { get; set; }
         public Rectangle Bounds { get; protected set; }
@@ -10,7 +12,6 @@ namespace Pirita.Scenes {
         public Matrix Transform { get; protected set; }
         public Vector2 Target { get; set; }
 
-        private float zoom, previousZoom;
 
         public Camera(Viewport viewport) {
             Bounds = viewport.Bounds;
@@ -37,9 +38,9 @@ namespace Pirita.Scenes {
         }
 
         private void UpdateMatrix() {
-            Transform = Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0)) *
-                    Matrix.CreateScale(Zoom) *
-                    Matrix.CreateTranslation(new Vector3(Bounds.Width * 0.5f, Bounds.Height * 0.5f, 0));
+            Transform = Matrix.CreateTranslation(new Vector3((int)-Position.X, (int)-Position.Y, 0)) *
+                    Matrix.CreateScale(Zoom, Zoom, 1) *
+                    Matrix.CreateTranslation(new Vector3((int)(Bounds.Width * 0.5f), (int)(Bounds.Height * 0.5f), 0));
             UpdateVisibleArea();
         }
 
@@ -48,14 +49,12 @@ namespace Pirita.Scenes {
             Position = newPosition;
         }
 
-        public void AdjustZoom(float zoomAmount) {
-            Zoom += zoomAmount;
-            if (Zoom < .35f) {
-                Zoom = .35f;
-            }
-            if (Zoom > 2f) {
-                Zoom = 2f;
-            }
+        public void SetZoom(float zoom) {
+            Zoom = zoom;
+        }
+
+        public void SetPort(int viewportSize, int sizeToAchieve) {
+            Zoom = viewportSize / (float)sizeToAchieve;
         }
 
         public void UpdateCamera(Viewport bounds) {
@@ -68,8 +67,8 @@ namespace Pirita.Scenes {
                 cameraMovement = Target;
             }
 
-            previousZoom = zoom;
-            zoom = Zoom;
+            _previousZoom = _zoom;
+            _zoom = Zoom;
 
             Position = Target;
         }

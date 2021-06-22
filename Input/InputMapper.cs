@@ -25,11 +25,27 @@ namespace Pirita.Input {
         }
 
         public virtual IEnumerable<InputCommand> GetKeyboardState(KeyboardState state, KeyboardState oldState) {
-            return new List<InputCommand>();
+            var commands = new List<InputCommand>();
+
+            if (Pressed(Keys.F3, state, oldState))
+                commands.Add(new InputCommand.DebugToggle());
+
+            if (Pressed(Keys.F11, state, oldState))
+                commands.Add(new InputCommand.FullscreenToggle());
+
+            return commands;
         }
 
         public virtual IEnumerable<InputCommand> GetMouseState(MouseState state, MouseState oldState) {
-            return new List<InputCommand>();
+            var commands = new List<InputCommand>();
+
+            if (Pressed(state.LeftButton, oldState.LeftButton))
+                commands.Add(new InputCommand.LClick());
+
+            if (Pressed(state.RightButton, oldState.RightButton))
+                commands.Add(new InputCommand.RClick());
+
+            return commands;
         }
 
         public virtual IEnumerable<InputCommand> GetGamePadState(GamePadState state, GamePadState oldState) {

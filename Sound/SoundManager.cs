@@ -18,7 +18,7 @@ namespace Pirita.Sound {
             RegisterSound(e, sound, 0.5f, 0f, 0f);
         }
 
-        internal void RegisterSound(Event e, SoundEffect sound, float volume, float pitch, float pan) {
+        public void RegisterSound(Event e, SoundEffect sound, float volume, float pitch, float pan) {
             _soundBank.Add(e.GetType(), new SoundBankItem(sound, new SoundAttributes(volume, pitch, pan)));
         }
     }

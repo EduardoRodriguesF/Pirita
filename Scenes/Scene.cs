@@ -2,48 +2,82 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pirita.Objects;
 using Pirita.Input;
+using Pirita.Objects;
+using Pirita.Pools;
 using Pirita.Sound;
+using Pirita.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Pirita.Pools.IPoolable;
 
 namespace Pirita.Scenes {
     public abstract class Scene {
         private bool _debug = false;
 
         private ContentManager _contentManager;
-        protected int _viewportWidth, _viewportHeight;
-        protected readonly List<GameObject> _gameObjects = new List<GameObject>();
+        private Viewport _viewport;
+        private readonly List<GameObject> _gameObjects = new List<GameObject>();
+
+        public Viewport Viewport { get => _viewport; set => _viewport = value; }
+        public Color BackgroundColor { get; protected set; } = Color.CornflowerBlue;
 
         protected InputManager InputManager { get; set; }
         protected SoundManager SoundManager { get; set; }
+        protected LayerManager LayerManager { get; set; }
 
         protected Camera Camera { get; set; }
+        protected Hud Hud { get; set; }
 
-        protected Rectangle RenderArea { get; set; }
+        protected Rectangle RenderArea;
 
         public event EventHandler<Scene> OnSceneSwitched;
         public event EventHandler<Event> OnEventNotification;
 
         public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight) {
             _contentManager = contentManager;
-            _viewportWidth = viewportWidth;
-            _viewportHeight = viewportHeight;
+            _viewport = new Viewport(0, 0, viewportWidth, viewportHeight);
+
+            RenderArea = new Rectangle(0, 0, viewportWidth, viewportHeight);
 
             SetInputManager();
             SetSoundManager();
+            SetLayerManager();
             SetCamera();
+            SetHud();
         }
 
         public abstract void LoadContent();
 
-        public abstract void HandleInput(GameTime gameTime);
+        public virtual void HandleInput(GameTime gameTime) {
+            if (InputManager == null) return;
+
+            InputManager.GetCommands(cmd => {
+                if (cmd is InputCommand.DebugToggle) {
+                    NotifyEvent(new Event.DebugToggle());
+                } else if (cmd is InputCommand.FullscreenToggle) {
+                    NotifyEvent(new Event.FullscreenToggle());
+                }
+            });
+        }
 
         protected abstract void SetInputManager();
-        protected abstract void SetSoundManager();
-        protected abstract void SetCamera();
+        protected virtual void SetSoundManager() {
+            SoundManager = new SoundManager();
+        }
+
+        public virtual void SetLayerManager() {
+            LayerManager = new LayerManager();
+        }
+
+        protected virtual void SetCamera() {
+            Camera = new Camera(_viewport);
+        }
+
+        protected virtual void SetHud() {
+            Hud = new Hud(_viewport);
+        }
 
         public void UnloadContent() {
             _contentManager.Unload();
@@ -81,32 +115,38 @@ namespace Pirita.Scenes {
             if (InputManager != null) InputManager.Update();
             HandleInput(gameTime);
 
-            RenderArea = new Rectangle(
-                (int)(Camera.Position.X - (_viewportWidth / Camera.Zoom / 2)),
-                (int)(Camera.Position.Y - (_viewportHeight / Camera.Zoom / 2)),
-                (int)(_viewportWidth / Camera.Zoom), (int)(_viewportHeight / Camera.Zoom)
-            );
+            UpdateRenderArea();
 
             UpdateGameState(gameTime);
+
+            Camera.UpdateCamera(_viewport);
+            Hud.Update(Camera.Position, Camera.Zoom);
+        }
+
+        protected void UpdateRenderArea() {
+            RenderArea.X = (int)(Camera.Position.X - (_viewport.Width / Camera.Zoom / 2));
+            RenderArea.Y = (int)(Camera.Position.Y - (_viewport.Height / Camera.Zoom / 2));
+            RenderArea.Width = (int)(_viewport.Width / Camera.Zoom);
+            RenderArea.Height = (int)(_viewport.Height / Camera.Zoom);
         }
 
         public void Render(SpriteBatch spriteBatch) {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
 
-            foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
-                if (RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
-                    obj.Render(spriteBatch);
-
-                    if (_debug) {
-                        obj.RenderHitbox(spriteBatch, Color.Red, 1);
-                        obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
+            foreach (var layer in LayerManager.Layers) {
+                foreach (var obj in layer.Objects) {
+                    if (obj.Visible && RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
+                        obj.Render(spriteBatch);
                     }
                 }
             }
 
-            foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
-                if (_debug) {
+            Hud.Render(spriteBatch);
+
+            if (_debug) {
+                foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
                     obj.RenderHitbox(spriteBatch, Color.Red, 1);
+                    obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
                 }
             }
 
@@ -125,26 +165,52 @@ namespace Pirita.Scenes {
             return _contentManager.Load<SoundEffect>(soundName);
         }
 
+        protected Effect LoadEffect(string effectName) {
+            return _contentManager.Load<Effect>(effectName);
+        }
+
         protected void AddObject(GameObject gameObject) {
+            AddObject(gameObject, 0);
+        }
+
+        protected void AddObject(GameObject gameObject, int depth) {
             _gameObjects.Add(gameObject);
+
+            var layer = LayerManager.FindLayer(depth);
+
+            layer.AddObject(gameObject);
+        }
+
+        protected void AddDrawableObject(Drawable obj, int depth) {
+            var layer = LayerManager.FindLayer(depth);
+
+            layer.AddObject(obj);
         }
 
         protected void RemoveObject(GameObject gameObject) {
             _gameObjects.Remove(gameObject);
+            foreach (var layer in LayerManager.Layers) {
+                if (layer.Objects.Contains(gameObject)) {
+                    layer.RemoveObject(gameObject);
+                    break;
+                }
+            }
         }
 
-        protected List<T> CleanObjects<T>(List<T> objectList) where T : GameObject {
+        protected List<T> CleanObjects<T>(List<T> objectList, Pool<T> objectPool = null) where T : GameObject, new() {
             List<T> listOfItemsToKeep = new List<T>();
 
             foreach (T item in objectList) {
-                if (item.Destroyed) RemoveObject(item);
-                else listOfItemsToKeep.Add(item);
+                if (item.Destroyed) {
+                    RemoveObject(item);
+                    if (objectPool != null) objectPool.Release(item);
+                } else listOfItemsToKeep.Add(item);
             }
 
             return listOfItemsToKeep;
         }
 
-        protected void ToggleDebug() {
+        public void ToggleDebug() {
             _debug = !_debug;
         }
     }

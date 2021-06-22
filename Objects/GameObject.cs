@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pirita.Animations;
 using Pirita.Collision;
+using Pirita.Pools;
 using Pirita.Scenes;
 using System;
 using System.Collections.Generic;
 
 namespace Pirita.Objects {
-    public class GameObject : Drawable {
+    public class GameObject : Drawable, IPoolable {
         protected List<Texture2D> _textures;
         protected List<Animation> _animations;
         protected AnimationManager _animationManager;
@@ -16,20 +17,21 @@ namespace Pirita.Objects {
 
         protected Vector2 _position;
 
-        protected List<Hitbox> _hitboxes = new List<Hitbox>();
+        private List<Hitbox> _hitboxes = new List<Hitbox>();
 
         public event EventHandler<Event> OnObjectChanged;
 
         public bool Destroyed { get; protected set; }
 
-        public virtual int Width {
+        public override int Width {
             get {
                 if (_textures != null) return _textures[0].Width;
                 else if (_animationManager != null) return _animations[0].FrameWidth;
                 return 0;
             }
         }
-        public virtual int Height {
+
+        public override int Height {
             get {
                 if (_textures != null) return _textures[0].Height;
                 else if (_animationManager != null) return _animations[0].FrameHeight;
@@ -60,6 +62,11 @@ namespace Pirita.Objects {
                 return _hitboxes;
             }
         }
+
+        public bool PoolIsValid { get; set; }
+        public bool PoolIsFree { get; set; }
+
+        public GameObject() { }
 
         public void SetTextures(List<Texture2D> textures) {
             _textures = textures;
@@ -97,7 +104,7 @@ namespace Pirita.Objects {
         public virtual void PostUpdate(GameTime gameTime) { }
 
         public override void Render(SpriteBatch spriteBatch) {
-            if (!Destroyed) {
+            if (!Destroyed && Visible) {
                 if (_animationManager != null) {
                     _animationManager.Render(spriteBatch, Origin, Scale, Opacity, Rotation);
                 } else {
@@ -115,8 +122,8 @@ namespace Pirita.Objects {
             }
 
             foreach (var hb in _hitboxes) {
-                int xPos = (int) (hb.Rectangle.X);
-                int yPos = (int) (hb.Rectangle.Y);
+                int xPos = (int)(hb.Rectangle.X);
+                int yPos = (int)(hb.Rectangle.Y);
 
                 spriteBatch.Draw(_debugTexture, new Rectangle(xPos, yPos, lineWidth, hb.Rectangle.Height + lineWidth), color);
                 spriteBatch.Draw(_debugTexture, new Rectangle(xPos, yPos, hb.Rectangle.Width + lineWidth, lineWidth), color);
@@ -147,5 +154,11 @@ namespace Pirita.Objects {
         public void Destroy() {
             Destroyed = true;
         }
+
+        public virtual void Initialize() {
+            Destroyed = false;
+        }
+
+        public virtual void Release() { }
     }
 }

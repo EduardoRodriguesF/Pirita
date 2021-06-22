@@ -82,6 +82,19 @@ namespace Pirita {
                 case Event.GameQuit _:
                     Exit();
                     break;
+                case Event.DebugToggle _:
+                    _currentScene.ToggleDebug();
+                    break;
+                case Event.FullscreenToggle _:
+                    _graphics.IsFullScreen = !_graphics.IsFullScreen;
+
+                    _graphics.PreferredBackBufferWidth = _graphics.IsFullScreen ? GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width : _DesignedResolutionWidth;
+                    _graphics.PreferredBackBufferHeight = _graphics.IsFullScreen ? GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height : _DesignedResolutionHeight;
+                    _graphics.ApplyChanges();
+
+                    _currentScene.Viewport = _graphics.GraphicsDevice.Viewport;
+
+                    break;
             }
         }
 
@@ -111,7 +124,7 @@ namespace Pirita {
         }
 
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.SetRenderTargets(_renderTarget);
+            /*GraphicsDevice.SetRenderTargets(_renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _currentScene.Render(_spriteBatch);
@@ -124,7 +137,11 @@ namespace Pirita {
 
             _spriteBatch.Draw(_renderTarget, _renderScaleRectangle, Color.White);
 
-            _spriteBatch.End();
+            _spriteBatch.End();*/
+
+            GraphicsDevice.Clear(_currentScene.BackgroundColor);
+
+            _currentScene.Render(_spriteBatch);
 
             base.Draw(gameTime);
         }
