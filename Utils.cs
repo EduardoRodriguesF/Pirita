@@ -1,4 +1,6 @@
-﻿namespace Pirita {
+﻿using Microsoft.Xna.Framework;
+
+namespace Pirita {
     public static class Utils {
         /// <summary>
         /// Moves "from" towards "to" by "amount" and returns the result
@@ -12,6 +14,20 @@
                 if (from < to) return to;
             }
             return from;
+        }
+
+        public static Vector2 Approach(Vector2 from, Vector2 to, float amount) {
+            return new Vector2(
+                Approach(from.X, to.X, amount),
+                Approach(from.Y, to.Y, amount)
+                );
+        }
+
+        public static Vector2 Approach(Vector2 from, Vector2 to, Vector2 amount) {
+            return new Vector2(
+                Approach(from.X, to.X, amount.X),
+                Approach(from.Y, to.Y, amount.Y)
+                );
         }
 
         /// <summary>
