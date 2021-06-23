@@ -107,6 +107,13 @@ namespace Pirita {
             }
         }
 
+        public static Vector2 Wrap(Vector2 value, Vector2 min, Vector2 max) {
+            return new Vector2(
+                Wrap(value.X, min.X, max.X),
+                Wrap(value.Y, min.Y, max.Y)
+                );
+        }
+
         /// <summary>
         /// Maintains a value between the specified range
         /// </summary>
