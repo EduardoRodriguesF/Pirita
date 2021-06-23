@@ -122,5 +122,12 @@ namespace Pirita {
             else if (value > max) return max;
             else return value;
         }
+
+        public static Vector2 Clamp(Vector2 value, Vector2 min, Vector2 max) {
+            return new Vector2(
+                Clamp(value.X, min.X, max.X),
+                Clamp(value.Y, min.Y, max.Y)
+                );
+        }
     }
 }
