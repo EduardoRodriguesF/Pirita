@@ -17,10 +17,7 @@ namespace Pirita {
         }
 
         public static Vector2 Approach(Vector2 from, Vector2 to, float amount) {
-            return new Vector2(
-                Approach(from.X, to.X, amount),
-                Approach(from.Y, to.Y, amount)
-                );
+            return Approach(from, to, new Vector2(amount));
         }
 
         public static Vector2 Approach(Vector2 from, Vector2 to, Vector2 amount) {
@@ -35,6 +32,17 @@ namespace Pirita {
         /// </summary>
         public static float Lerp(float from, float to, float amount) {
             return from + (to - from) * amount;
+        }
+
+        public static Vector2 Lerp(Vector2 from, Vector2 to, float amount) {
+            return Lerp(from, to, new Vector2(amount));
+        }
+
+        public static Vector2 Lerp(Vector2 from, Vector2 to, Vector2 amount) {
+            return new Vector2(
+                Lerp(from.X, to.X, amount.X),
+                Lerp(from.Y, to.Y, amount.Y)
+                );
         }
 
         /// <summary>
