@@ -75,6 +75,13 @@ namespace Pirita {
             return Lerp(oMin, oMax, InvLerp(iMin, iMax, value));
         }
 
+        public static Vector2 Remap(Vector2 iMin, Vector2 iMax, Vector2 oMin, Vector2 oMax, Vector2 value) {
+            return new Vector2(
+                Remap(iMin.X, iMax.X, oMin.X, oMax.X, value.X),
+                Remap(iMin.Y, iMax.Y, oMin.Y, oMax.Y, value.Y)
+                );
+        }
+
         /// <summary>
         /// Returns the value wrapped, values over or under will be wrapped around
         /// </summary>
