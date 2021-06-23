@@ -52,6 +52,17 @@ namespace Pirita {
             return (value - min) / (max - min);
         }
 
+        public static Vector2 InvLerp(Vector2 from, Vector2 to, float amount) {
+            return InvLerp(from, to, new Vector2(amount));
+        }
+
+        public static Vector2 InvLerp(Vector2 from, Vector2 to, Vector2 amount) {
+            return new Vector2(
+                InvLerp(from.X, to.X, amount.X),
+                InvLerp(from.Y, to.Y, amount.Y)
+                );
+        }
+
         /// <summary>
         /// Returns the remapped value from iMin-iMax range to oMin-oMax range
         /// </summary>
