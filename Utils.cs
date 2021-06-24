@@ -130,4 +130,15 @@ namespace Pirita {
                 );
         }
     }
+
+    public static class ConvertAngle {
+        public const float DegreesToRadianConversion = MathHelper.Pi / 180f;
+        public const float RadiansToDegreesConversion = 180f / MathHelper.Pi;
+
+        public static float DegreesToRadians(float value) => value * DegreesToRadianConversion;
+        public static float RadiansToDegrees(float value) => value * RadiansToDegreesConversion;
+
+        public static float ToRadians(this float value) => DegreesToRadians(value);
+        public static float ToDegrees(this float value) => RadiansToDegrees(value);
+    }
 }
