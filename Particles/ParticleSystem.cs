@@ -92,13 +92,10 @@ namespace Pirita.Particles {
         private List<Particle> _particles;
         private Pool<Particle> _particlePool;
 
-        private Texture2D _texture;
-
         public ParticleType ParticleType;
 
         public ParticleSystem(Texture2D texture, Vector2 location) {
             EmitterLocation = location;
-            _texture = texture;
 
             _particles = new List<Particle>();
             _particlePool = new Pool<Particle>(32);
