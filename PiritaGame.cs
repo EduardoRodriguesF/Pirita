@@ -8,9 +8,6 @@ namespace Pirita {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private RenderTarget2D _renderTarget;
-        private Rectangle _renderScaleRectangle;
-
         private Scene _currentScene;
         private Scene _firstScene;
 
@@ -34,33 +31,7 @@ namespace Pirita {
             _graphics.PreferredBackBufferHeight = _DesignedResolutionHeight;
             _graphics.ApplyChanges();
 
-            _renderTarget = new RenderTarget2D(_graphics.GraphicsDevice, _DesignedResolutionWidth, _DesignedResolutionHeight, false,
-                SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
-
-            _renderScaleRectangle = GetScaleRectangle();
-
             base.Initialize();
-        }
-
-        private Rectangle GetScaleRectangle() {
-            var variance = 0.5;
-            var actualAspectRatio = Window.ClientBounds.Width / (float)Window.ClientBounds.Height;
-
-            Rectangle scaleRectangle;
-
-            if (actualAspectRatio <= _designedResolutionAspectRatio) {
-                var presentHeight = (int)(Window.ClientBounds.Width / _designedResolutionAspectRatio + variance);
-                var barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
-
-                scaleRectangle = new Rectangle(0, barHeight, Window.ClientBounds.Width, presentHeight);
-            } else {
-                var presentWidth = (int)(Window.ClientBounds.Height * _designedResolutionAspectRatio + variance);
-                var barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
-
-                scaleRectangle = new Rectangle(barWidth, 0, presentWidth, Window.ClientBounds.Height);
-            }
-
-            return scaleRectangle;
         }
 
         protected override void LoadContent() {
@@ -124,21 +95,6 @@ namespace Pirita {
         }
 
         protected override void Draw(GameTime gameTime) {
-            /*GraphicsDevice.SetRenderTargets(_renderTarget);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            _currentScene.Render(_spriteBatch);
-
-            // Render scaled content
-            _graphics.GraphicsDevice.SetRenderTarget(null);
-            _graphics.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
-
-            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
-
-            _spriteBatch.Draw(_renderTarget, _renderScaleRectangle, Color.White);
-
-            _spriteBatch.End();*/
-
             GraphicsDevice.Clear(_currentScene.BackgroundColor);
 
             _currentScene.Render(_spriteBatch);
