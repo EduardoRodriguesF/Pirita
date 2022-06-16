@@ -98,8 +98,8 @@ namespace Pirita.Scenes {
         }
 
         protected virtual void UpdateObjects(GameTime gameTime) {
-            foreach (var gameObject in _gameObjects) {
-                gameObject.Update(gameTime);
+            foreach (var obj in _gameObjects) {
+                obj.Update(gameTime);
             }
         }
 
