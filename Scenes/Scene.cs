@@ -53,10 +53,10 @@ namespace Pirita.Scenes {
         public virtual void HandleInput(GameTime gameTime) {
             if (InputManager == null) return;
 
-            InputManager.GetCommands(cmd => {
-                if (cmd is InputCommand.DebugToggle) {
+            InputManager.GetCommands(command => {
+                if (command is InputCommand.DebugToggle) {
                     NotifyEvent(new Event.DebugToggle());
-                } else if (cmd is InputCommand.FullscreenToggle) {
+                } else if (command is InputCommand.FullscreenToggle) {
                     NotifyEvent(new Event.FullscreenToggle());
                 }
             });
