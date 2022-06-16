@@ -33,5 +33,16 @@ namespace Pirita.Tests {
             
             Assert.Equal(expected, result);
         }
+        
+        [Theory]
+        [InlineData(1, 3f, 2f, 0.5f)]
+        [InlineData(1f, 3f, 3f, 1f)]
+        [InlineData(1f, 3f, 1f, 0f)]
+        [InlineData(1f, -4f, -2f, 0.6f)]
+        public void InvLerp_ReturnsPercentageBetweenMinAndMax(float min, float max, float value, float expected) {
+            var result = Utils.InvLerp(min, max, value);
+            
+            Assert.Equal(expected, result);
+        }
     }
 }
