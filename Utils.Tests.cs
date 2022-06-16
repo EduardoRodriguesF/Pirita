@@ -65,5 +65,15 @@ namespace Pirita.Tests {
             
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(0f, 1f, 0.5f, 0.5f)]
+        [InlineData(0f, 1f, -1f, 0f)]
+        [InlineData(0f, 1f, 2f, 1f)]
+        public void Clamp_MaintainsValueBetweenMinAndMax(float min, float max, float value, float expected) {
+            var result = Utils.Clamp(value, min, max);
+            
+            Assert.Equal(expected, result);
+        }
     }
 }
