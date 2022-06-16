@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/EduardoRodriguesF/Pirita</RepositoryUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>1.7.0-alpha</Version>
+    <Version>1.0.0</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE</DefineConstants>
