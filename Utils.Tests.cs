@@ -44,5 +44,15 @@ namespace Pirita.Tests {
             
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(1f, 3f, 2f, 0.5f, 2f, 1.25f)]
+        [InlineData(1f, 3f, 3f, 1f, 3f, 1f)]
+        [InlineData(1f, 3f, 0f, 1f, 1f, 0f)]
+        public void Remap_RemapsValueBetweenInputMinAndMaxToOutput(float inputMin, float inputMax, float outputMin, float outputMax, float value, float expected) {
+            var result = Utils.Remap(inputMin, inputMax, outputMin, outputMax, value);
+            
+            Assert.Equal(expected, result);
+        }
     }
 }
