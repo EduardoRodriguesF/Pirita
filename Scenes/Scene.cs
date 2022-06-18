@@ -135,9 +135,10 @@ namespace Pirita.Scenes {
 
             foreach (var layer in LayerManager.Layers) {
                 foreach (var obj in layer.Objects) {
-                    if (obj.Visible && RenderArea.Intersects(new Rectangle((int)obj.Position.X, (int)obj.Position.Y, obj.Width, obj.Height))) {
-                        obj.Render(spriteBatch);
-                    }
+                    if (!obj.Visible || !RenderArea.Intersects(new Rectangle((int) obj.Position.X, (int) obj.Position.Y, obj.Width, obj.Height))) 
+                        continue;
+
+                    obj.Render(spriteBatch);
                 }
             }
 
