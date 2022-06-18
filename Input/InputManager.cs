@@ -6,55 +6,55 @@ namespace Pirita.Input {
     public class InputManager {
         private readonly InputMapper _inputMapper;
 
-        private KeyboardState _ks;
-        private KeyboardState _oldKs;
+        private KeyboardState _keyboardState;
+        private KeyboardState _oldKeyboardState;
 
-        private MouseState _ms;
-        private MouseState _oldMs;
+        private MouseState _mouseState;
+        private MouseState _oldMouseState;
 
-        private GamePadState _gs;
-        private GamePadState _oldGs;
+        private GamePadState _gamePadState;
+        private GamePadState _oldGamePadState;
 
         public InputManager(InputMapper inputMapper) {
             _inputMapper = inputMapper;
 
-            _ks = Keyboard.GetState();
-            _oldKs = _ks;
+            _keyboardState = Keyboard.GetState();
+            _oldKeyboardState = _keyboardState;
 
-            _ms = Mouse.GetState();
-            _oldMs = _ms;
+            _mouseState = Mouse.GetState();
+            _oldMouseState = _mouseState;
 
-            _gs = GamePad.GetState(0);
-            _oldGs = _gs;
+            _gamePadState = GamePad.GetState(0);
+            _oldGamePadState = _gamePadState;
         }
 
         public void Update() {
-            _oldKs = _ks;
-            _ks = Keyboard.GetState();
+            _oldKeyboardState = _keyboardState;
+            _keyboardState = Keyboard.GetState();
 
-            _oldMs = _ms;
-            _ms = Mouse.GetState();
+            _oldMouseState = _mouseState;
+            _mouseState = Mouse.GetState();
 
-            _oldGs = _gs;
-            _gs = GamePad.GetState(0);
+            _oldGamePadState = _gamePadState;
+            _gamePadState = GamePad.GetState(0);
         }
 
         public void GetCommands(Action<InputCommand> actOnState) {
-            foreach (var state in _inputMapper.GetKeyboardState(_ks, _oldKs)) {
+            foreach (var state in _inputMapper.GetKeyboardState(_keyboardState, _oldKeyboardState)) {
                 actOnState(state);
             }
 
-            foreach (var state in _inputMapper.GetMouseState(_ms, _oldMs)) {
+            foreach (var state in _inputMapper.GetMouseState(_mouseState, _oldMouseState)) {
                 actOnState(state);
             }
 
-            foreach (var state in _inputMapper.GetGamePadState(_gs, _oldGs)) {
+            foreach (var state in _inputMapper.GetGamePadState(_gamePadState, _oldGamePadState)) {
                 actOnState(state);
             }
         }
 
         public Point GetMousePosition() {
-            return _ms.Position;
+            return _mouseState.Position;
         }
     }
 }
