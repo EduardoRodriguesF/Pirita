@@ -104,14 +104,15 @@ namespace Pirita.Objects {
         public virtual void PostUpdate(GameTime gameTime) { }
 
         public override void Render(SpriteBatch spriteBatch) {
-            if (!Destroyed && Visible) {
-                if (_animationManager != null) {
-                    _animationManager.Render(spriteBatch, Origin, Scale, Opacity, Rotation);
-                } else {
-                    var inverted = Scale.X < 0 ? 1 : 0;
-                    spriteBatch.Draw(_textures[0], _position, new Rectangle(0, 0, Width, Height), Color.White * Opacity, Rotation, Origin, new Vector2(Math.Abs(Scale.X), Math.Abs(Scale.Y)), (SpriteEffects)inverted, 0f);
-                }
+            if (Destroyed || !Visible) return;
+            
+            if (_animationManager != null) {
+                _animationManager.Render(spriteBatch, Origin, Scale, Opacity, Rotation);
+                return;
             }
+            
+            var inverted = Scale.X < 0 ? 1 : 0;
+            spriteBatch.Draw(_textures[0], _position, new Rectangle(0, 0, Width, Height), Color.White * Opacity, Rotation, Origin, new Vector2(Math.Abs(Scale.X), Math.Abs(Scale.Y)), (SpriteEffects) inverted, 0f);
         }
 
         public void RenderHitbox(SpriteBatch spriteBatch, Color color, int lineWidth) {
