@@ -29,3 +29,5 @@ jobs:
         PROJECT_FILE_PATH: ./Pirita.csproj
         PACKAGE_NAME: Pirita
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish GitHub Package
+      run: dotnet nuget add source --username EduardoRodriguesF --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/EduardoRodriguesF/index.json"
