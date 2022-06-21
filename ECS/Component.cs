@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pirita.EC {
+namespace Pirita.ECS {
     public abstract class Component {
         public int Depth;
 
