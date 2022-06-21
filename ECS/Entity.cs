@@ -17,14 +17,13 @@ namespace Pirita.ECS {
 
         public virtual void Destroy() {
             foreach (var component in _componentList) {
-                component.Destroy();
+                component.Enabled = false;
             }
         }
 
         public T AddComponent<T>(T component) where T : Component {
             _componentList.Add(component);
             component.Owner = this;
-            component.Initialize();
 
             return component;
         }
