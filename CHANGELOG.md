@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - 2022-06-21
 
 ### Added 
+- [**ECS**] - New system: `MoveSystem`.
+- [**ECS**] - New component: `VelocityComponent`.
+- [**ECS**] - New component: `PositionComponent`.
 - New `InputChanged` event alternative for `GetCommand`.
 
 ### Changed
