@@ -54,6 +54,10 @@ namespace Pirita.EC {
             return _componentDictionary[type];
         }
 
+        public bool HasComponent(Type type) {
+            return _componentDictionary.ContainsKey(type);
+        }
+
         public List<Component> GetAllComponent() {
             return _componentList;
         }
