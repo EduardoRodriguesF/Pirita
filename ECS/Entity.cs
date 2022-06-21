@@ -7,6 +7,8 @@ namespace Pirita.ECS {
 
         public bool Enabled = true;
 
+        public event EventHandler ComponentsChanged;
+
         private Dictionary<Type, Component> _componentDictionary;
         private List<Component> _componentList;
 
@@ -24,6 +26,7 @@ namespace Pirita.ECS {
         public T AddComponent<T>(T component) where T : Component {
             _componentList.Add(component);
             component.Owner = this;
+            OnComponentsChanged();
 
             return component;
         }
@@ -48,11 +51,16 @@ namespace Pirita.ECS {
                 _componentDictionary.Remove(type);
                 _componentList.Remove(component);
                 component.Owner = null;
+                OnComponentsChanged();
 
                 return (T) component;
             }
 
             return null;
+        }
+
+        protected virtual void OnComponentsChanged() {
+            ComponentsChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

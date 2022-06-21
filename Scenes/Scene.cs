@@ -112,10 +112,8 @@ namespace Pirita.Scenes {
         }
 
         protected virtual void UpdateComponentSystems(GameTime gameTime) {
-            foreach (var entity in _entities) {
-                foreach (var componentSystem in _componentSystems) {
-                    componentSystem.Update(gameTime, entity);
-                }
+            foreach (var componentSystem in _componentSystems) {
+                componentSystem.Update(gameTime);
             }
         }
 
@@ -200,10 +198,18 @@ namespace Pirita.Scenes {
         }
 
         protected void AddEntity(Entity entity) {
+            foreach (var componentSystem in _componentSystems) {
+                if (!componentSystem.IsEntityValid(entity)) return;
+
+                componentSystem.AddEntityIfValid(entity);
+            }
+
             _entities.Add(entity);
         }
 
         protected void AddComponentSystem(ComponentSystem componentSystem) {
+            componentSystem.CheckForValidEntities(_entities);
+
             _componentSystems.Add(componentSystem);
         }
 

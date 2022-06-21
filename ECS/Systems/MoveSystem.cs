@@ -7,8 +7,8 @@ namespace Pirita.ECS {
             RequiredComponents.Add(typeof(PositionComponent));
         }
 
-        public override void Update(GameTime gameTime, Entity entity) {
-            if (!HasRequiredComponents(entity)) return;
+        public override void UpdateOnEntity(GameTime gameTime, Entity entity) {
+            if (!IsEntityValid(entity)) return;
 
             var (speed, velocity) = entity.GetComponent<VelocityComponent>();
             var position = entity.GetComponent<PositionComponent>().Position;
