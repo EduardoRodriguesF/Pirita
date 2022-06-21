@@ -145,7 +145,7 @@ namespace Pirita.Scenes {
             Hud.Render(spriteBatch);
 
             if (_debug) {
-                foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.zIndex)) {
+                foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.Depth)) {
                     obj.RenderHitbox(spriteBatch, Color.Red, 1);
                     obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
                 }

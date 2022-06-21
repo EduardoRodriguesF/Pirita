@@ -24,7 +24,7 @@ namespace Pirita.Objects {
         }
 
         public override void Render(SpriteBatch spriteBatch) {
-            spriteBatch.DrawString(Font, Str, Position, Color, Rotation, Origin, Scale, SpriteEffects.None, zIndex);
+            spriteBatch.DrawString(Font, Str, Position, Color, Rotation, Origin, Scale, SpriteEffects.None, Depth);
         }
     }
 }

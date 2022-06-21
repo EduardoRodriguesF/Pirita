@@ -9,7 +9,7 @@ namespace Pirita.Scenes {
         public int Depth;
 
         public List<Drawable> Objects {
-            get => _objects.OrderBy(a => a.zIndex).ToList();
+            get => _objects.OrderBy(a => a.Depth).ToList();
         }
 
         public Layer(int depth) {

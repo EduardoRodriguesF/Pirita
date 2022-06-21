@@ -5,7 +5,7 @@ namespace Pirita.Objects {
     public abstract class Drawable {
         private float _rotation;
 
-        public int zIndex;
+        public int Depth;
         public bool Visible { get; set; } = true;
         public virtual Vector2 InitialPosition { get; set; }
         public virtual Vector2 InitialScale { get; set; }

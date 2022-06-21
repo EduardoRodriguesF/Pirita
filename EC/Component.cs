@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pirita.EC {
     public abstract class Component {
-        public int zIndex;
+        public int Depth;
 
         public Entity Owner;
 
