@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Pirita.ECS {
@@ -8,7 +6,6 @@ namespace Pirita.ECS {
         public bool Destroyed { get; private set; } = false;
 
         public bool Enabled = true;
-        public bool Visible = true;
 
         private Dictionary<Type, Component> _componentDictionary;
         private List<Component> _componentList;
@@ -16,24 +13,6 @@ namespace Pirita.ECS {
         public Entity() {
             _componentDictionary = new Dictionary<Type, Component>();
             _componentList = new List<Component>();
-        }
-
-        public virtual void Update(GameTime gameTime) {
-            foreach (var component in _componentList) {
-                if (component.Enabled) component.Update(gameTime);
-            }
-        }
-
-        public virtual void PostUpdate(GameTime gameTime) {
-            foreach (var component in _componentList) {
-                if (component.Enabled) component.PostUpdate(gameTime);
-            }
-        }
-
-        public virtual void Render(SpriteBatch spriteBatch) {
-            foreach (var component in _componentList) {
-                if (component.Visible) component.Render(spriteBatch);
-            }
         }
 
         public virtual void Destroy() {
