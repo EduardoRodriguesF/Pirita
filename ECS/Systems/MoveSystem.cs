@@ -8,8 +8,6 @@ namespace Pirita.ECS {
         }
 
         public override void UpdateOnEntity(GameTime gameTime, Entity entity) {
-            if (!IsEntityValid(entity)) return;
-
             var (speed, velocity) = entity.GetComponent<VelocityComponent>();
             var position = entity.GetComponent<PositionComponent>().Position;
 
