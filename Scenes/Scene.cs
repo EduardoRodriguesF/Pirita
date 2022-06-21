@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Pirita.ECS;
 using Pirita.Input;
 using Pirita.Objects;
 using Pirita.Pools;
@@ -10,7 +11,6 @@ using Pirita.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Pirita.Pools.IPoolable;
 
 namespace Pirita.Scenes {
     public abstract class Scene {
@@ -19,6 +19,8 @@ namespace Pirita.Scenes {
         private ContentManager _contentManager;
         private Viewport _viewport;
         private readonly List<GameObject> _gameObjects = new List<GameObject>();
+        private readonly List<Entity> _entities = new List<Entity>();
+        private readonly List<ComponentSystem> _componentSystems = new List<ComponentSystem>();
 
         public Viewport Viewport { get => _viewport; set => _viewport = value; }
         public Color BackgroundColor { get; protected set; } = Color.CornflowerBlue;
@@ -109,6 +111,14 @@ namespace Pirita.Scenes {
             }
         }
 
+        protected virtual void UpdateComponentSystems(GameTime gameTime) {
+            foreach (var entity in _entities) {
+                foreach (var componentSystem in _componentSystems) {
+                    componentSystem.Update(gameTime, entity);
+                }
+            }
+        }
+
         public abstract void UpdateGameState(GameTime gameTime);
 
         public void Update(GameTime gameTime) {
@@ -117,6 +127,7 @@ namespace Pirita.Scenes {
 
             UpdateRenderArea();
 
+            UpdateComponentSystems(gameTime);
             UpdateGameState(gameTime);
 
             Camera.UpdateCamera(_viewport);
@@ -186,6 +197,14 @@ namespace Pirita.Scenes {
             var layer = LayerManager.FindLayer(depth);
 
             layer.AddObject(obj);
+        }
+
+        protected void AddEntity(Entity entity) {
+            _entities.Add(entity);
+        }
+
+        protected void AddComponentSystem(ComponentSystem componentSystem) {
+            _componentSystems.Add(componentSystem);
         }
 
         protected void RemoveObject(GameObject gameObject) {
