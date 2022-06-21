@@ -3,6 +3,13 @@ using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace Pirita.Input {
+    public class InputEventArgs {
+        public InputCommand InputCommand;
+
+        public InputEventArgs(InputCommand inputCommand) {
+            InputCommand = inputCommand;
+        }
+    }
     public class InputManager {
         private readonly InputMapper _inputMapper;
 
@@ -14,6 +21,8 @@ namespace Pirita.Input {
 
         private GamePadState _gamePadState;
         private GamePadState _oldGamePadState;
+
+        public event EventHandler<InputEventArgs> InputChanged;
 
         public InputManager(InputMapper inputMapper) {
             _inputMapper = inputMapper;
@@ -55,6 +64,10 @@ namespace Pirita.Input {
 
         public Point GetMousePosition() {
             return _mouseState.Position;
+        }
+
+        protected virtual void OnInputChanged(InputCommand inputCommand) {
+            InputChanged?.Invoke(this, new InputEventArgs(inputCommand));
         }
     }
 }
