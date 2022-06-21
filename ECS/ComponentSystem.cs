@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace Pirita.ECS {
-    public class System {
+    public class ComponentSystem {
         public List<Type> RequiredComponents { get; private set; } = new List<Type>();
 
         public bool HasRequiredComponents(Entity entity) {
