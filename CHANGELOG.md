@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - 2022-06-21
 
+- Rename namespace EC to ECS since we are shifting into Entity Component System architecture.
 - New `InputChanged` event alternative for `GetCommand`.
 
 ## [1.0.0] - 2022-06-16
