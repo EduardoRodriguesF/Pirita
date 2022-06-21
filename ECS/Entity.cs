@@ -28,10 +28,10 @@ namespace Pirita.ECS {
             return component;
         }
 
-        public Component GetComponent(Type type) {
-            return _componentDictionary[type];
+        public T GetComponent<T>() where T : Component {
+            return (T) _componentDictionary[typeof(T)];
         }
-
+        
         public bool HasComponent(Type type) {
             return _componentDictionary.ContainsKey(type);
         }
@@ -40,14 +40,16 @@ namespace Pirita.ECS {
             return _componentList;
         }
 
-        public Component RemoveComponent(Type type) {
+        public T RemoveComponent<T>() where T : Component {
+            var type = typeof(T);
+
             if (_componentDictionary.TryGetValue(type, out Component component)) {
-                component.Destroy();
+                component.Enabled = false;
                 _componentDictionary.Remove(type);
                 _componentList.Remove(component);
                 component.Owner = null;
 
-                return component;
+                return (T) component;
             }
 
             return null;
