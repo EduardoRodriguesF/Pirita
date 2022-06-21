@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [**ECS**] - New system: `MoveSystem`.
 - [**ECS**] - New component: `VelocityComponent`.
 - [**ECS**] - New component: `PositionComponent`.
-- New `InputChanged` event alternative for `GetCommand`.
+- [**Input**] - `InputChanged` event alternative for `GetCommand`.
 
 ### Changed
 - Rename namespace EC to ECS since we are shifting into Entity Component System architecture.
