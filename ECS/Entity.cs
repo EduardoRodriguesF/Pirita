@@ -41,6 +41,11 @@ namespace Pirita.ECS {
             return _componentDictionary.ContainsKey(type);
         }
 
+        public void UpdateComponent<T>(T Component) where T : Component {
+            _componentDictionary[typeof(T)] = Component;
+            OnComponentsChanged();
+        }
+
         public List<Component> GetAllComponent() {
             return _componentList;
         }
