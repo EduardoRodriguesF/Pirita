@@ -9,9 +9,11 @@ namespace Pirita.ECS {
 
         public override void UpdateOnEntity(GameTime gameTime, Entity entity) {
             var (speed, velocity) = entity.GetComponent<VelocityComponent>();
-            var position = entity.GetComponent<PositionComponent>().Position;
+            var position = entity.GetComponent<PositionComponent>();
 
-            position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
+            position.Position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
+
+            entity.UpdateComponent<PositionComponent>(position);
         }
     }
 }
