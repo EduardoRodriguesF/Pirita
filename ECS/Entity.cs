@@ -25,6 +25,8 @@ namespace Pirita.ECS {
 
         public T AddComponent<T>(T component) where T : Component {
             _componentList.Add(component);
+            _componentDictionary.Add(typeof(T), component);
+
             component.Owner = this;
             OnComponentsChanged();
 
