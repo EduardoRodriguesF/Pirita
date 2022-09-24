@@ -5,6 +5,7 @@
     <PublishReadyToRun>false</PublishReadyToRun>
     <RollForward>Major</RollForward>
     <TieredCompilation>false</TieredCompilation>
+    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
