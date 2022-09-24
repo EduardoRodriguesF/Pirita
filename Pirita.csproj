@@ -11,7 +11,7 @@
     <SignAssembly>false</SignAssembly>
     <Authors>Eduardo Rodrigues</Authors>
     <Company></Company>
-    <Description>Game engine based on Monogame</Description>
+    <Description>Game development framework for Monogame</Description>
     <RepositoryUrl>https://github.com/EduardoRodriguesF/Pirita</RepositoryUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ApplicationManifest>app.manifest</ApplicationManifest>
