@@ -1,55 +1,55 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace Pirita.Input {
-    public class InputMapper {
-        protected bool Pressed(Keys k, KeyboardState state, KeyboardState oldState) {
-            return state.IsKeyDown(k) && oldState.IsKeyUp(k);
-        }
-        protected bool Pressed(ButtonState state, ButtonState oldState) {
-            return state == ButtonState.Pressed && oldState == ButtonState.Released;
-        }
+namespace Pirita.Input;
 
-        protected bool Holding(Keys k, KeyboardState state) {
-            return state.IsKeyDown(k);
-        }
-        protected bool Holding(ButtonState state) {
-            return state == ButtonState.Pressed;
-        }
+public class InputMapper {
+    protected bool Pressed(Keys k, KeyboardState state, KeyboardState oldState) {
+        return state.IsKeyDown(k) && oldState.IsKeyUp(k);
+    }
+    protected bool Pressed(ButtonState state, ButtonState oldState) {
+        return state == ButtonState.Pressed && oldState == ButtonState.Released;
+    }
 
-        protected bool Released(Keys k, KeyboardState state, KeyboardState oldState) {
-            return state.IsKeyUp(k) && oldState.IsKeyDown(k);
-        }
-        protected bool Released(ButtonState state, ButtonState oldState) {
-            return state == ButtonState.Released && oldState == ButtonState.Pressed;
-        }
+    protected bool Holding(Keys k, KeyboardState state) {
+        return state.IsKeyDown(k);
+    }
+    protected bool Holding(ButtonState state) {
+        return state == ButtonState.Pressed;
+    }
 
-        public virtual IEnumerable<InputCommand> GetKeyboardState(KeyboardState state, KeyboardState oldState) {
-            var commands = new List<InputCommand>();
+    protected bool Released(Keys k, KeyboardState state, KeyboardState oldState) {
+        return state.IsKeyUp(k) && oldState.IsKeyDown(k);
+    }
+    protected bool Released(ButtonState state, ButtonState oldState) {
+        return state == ButtonState.Released && oldState == ButtonState.Pressed;
+    }
 
-            if (Pressed(Keys.F3, state, oldState))
-                commands.Add(new InputCommand.DebugToggle());
+    public virtual IEnumerable<InputCommand> GetKeyboardState(KeyboardState state, KeyboardState oldState) {
+        var commands = new List<InputCommand>();
 
-            if (Pressed(Keys.F11, state, oldState))
-                commands.Add(new InputCommand.FullscreenToggle());
+        if (Pressed(Keys.F3, state, oldState))
+            commands.Add(new InputCommand.DebugToggle());
 
-            return commands;
-        }
+        if (Pressed(Keys.F11, state, oldState))
+            commands.Add(new InputCommand.FullscreenToggle());
 
-        public virtual IEnumerable<InputCommand> GetMouseState(MouseState state, MouseState oldState) {
-            var commands = new List<InputCommand>();
+        return commands;
+    }
 
-            if (Pressed(state.LeftButton, oldState.LeftButton))
-                commands.Add(new InputCommand.LClick());
+    public virtual IEnumerable<InputCommand> GetMouseState(MouseState state, MouseState oldState) {
+        var commands = new List<InputCommand>();
 
-            if (Pressed(state.RightButton, oldState.RightButton))
-                commands.Add(new InputCommand.RClick());
+        if (Pressed(state.LeftButton, oldState.LeftButton))
+            commands.Add(new InputCommand.LClick());
 
-            return commands;
-        }
+        if (Pressed(state.RightButton, oldState.RightButton))
+            commands.Add(new InputCommand.RClick());
 
-        public virtual IEnumerable<InputCommand> GetGamePadState(GamePadState state, GamePadState oldState) {
-            return new List<InputCommand>();
-        }
+        return commands;
+    }
+
+    public virtual IEnumerable<InputCommand> GetGamePadState(GamePadState state, GamePadState oldState) {
+        return new List<InputCommand>();
     }
 }

@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pirita.Scenes {
-    public class Layer {
-        private readonly List<Drawable> _objects = new List<Drawable>();
+namespace Pirita.Scenes;
 
-        public int Depth;
+public class Layer {
+    private readonly List<Drawable> _objects = new List<Drawable>();
 
-        public List<Drawable> Objects {
-            get => _objects.OrderBy(a => a.Depth).ToList();
-        }
+    public int Depth;
 
-        public Layer(int depth) {
-            Depth = depth;
-        }
+    public List<Drawable> Objects {
+        get => _objects.OrderBy(a => a.Depth).ToList();
+    }
 
-        public void AddObject(Drawable obj) {
-            _objects.Add(obj);
-        }
+    public Layer(int depth) {
+        Depth = depth;
+    }
 
-        public void RemoveObject(Drawable obj) {
-            _objects.Remove(obj);
-        }
+    public void AddObject(Drawable obj) {
+        _objects.Add(obj);
+    }
+
+    public void RemoveObject(Drawable obj) {
+        _objects.Remove(obj);
     }
 }

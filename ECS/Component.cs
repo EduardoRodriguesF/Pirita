@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pirita.ECS {
-    public abstract class Component {
-        public Entity Owner;
-        public bool Enabled = true;
-    }
+namespace Pirita.ECS;
+
+public abstract class Component {
+    public Entity Owner;
+    public bool Enabled = true;
 }

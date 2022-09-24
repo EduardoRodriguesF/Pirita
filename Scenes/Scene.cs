@@ -12,232 +12,232 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pirita.Scenes {
-    public abstract class Scene {
-        private bool _debug = false;
+namespace Pirita.Scenes;
 
-        private ContentManager _contentManager;
-        private Viewport _viewport;
-        private readonly List<GameObject> _gameObjects = new List<GameObject>();
-        private readonly List<Entity> _entities = new List<Entity>();
-        private readonly List<ComponentSystem> _componentSystems = new List<ComponentSystem>();
+public abstract class Scene {
+    private bool _debug = false;
 
-        public Viewport Viewport { get => _viewport; set => _viewport = value; }
-        public Color BackgroundColor { get; protected set; } = Color.CornflowerBlue;
+    private ContentManager _contentManager;
+    private Viewport _viewport;
+    private readonly List<GameObject> _gameObjects = new List<GameObject>();
+    private readonly List<Entity> _entities = new List<Entity>();
+    private readonly List<ComponentSystem> _componentSystems = new List<ComponentSystem>();
 
-        protected InputManager InputManager { get; set; }
-        protected SoundManager SoundManager { get; set; }
-        protected LayerManager LayerManager { get; set; }
+    public Viewport Viewport { get => _viewport; set => _viewport = value; }
+    public Color BackgroundColor { get; protected set; } = Color.CornflowerBlue;
 
-        protected Camera Camera { get; set; }
-        protected Hud Hud { get; set; }
+    protected InputManager InputManager { get; set; }
+    protected SoundManager SoundManager { get; set; }
+    protected LayerManager LayerManager { get; set; }
 
-        protected Rectangle RenderArea;
+    protected Camera Camera { get; set; }
+    protected Hud Hud { get; set; }
 
-        public event EventHandler<Scene> OnSceneSwitched;
-        public event EventHandler<Event> OnEventNotification;
+    protected Rectangle RenderArea;
 
-        public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight) {
-            _contentManager = contentManager;
-            _viewport = new Viewport(0, 0, viewportWidth, viewportHeight);
+    public event EventHandler<Scene> OnSceneSwitched;
+    public event EventHandler<Event> OnEventNotification;
 
-            RenderArea = new Rectangle(0, 0, viewportWidth, viewportHeight);
+    public void Initialize(ContentManager contentManager, int viewportWidth, int viewportHeight) {
+        _contentManager = contentManager;
+        _viewport = new Viewport(0, 0, viewportWidth, viewportHeight);
 
-            SetInputManager();
-            SetSoundManager();
-            SetLayerManager();
-            SetCamera();
-            SetHud();
-        }
+        RenderArea = new Rectangle(0, 0, viewportWidth, viewportHeight);
 
-        public abstract void LoadContent();
+        SetInputManager();
+        SetSoundManager();
+        SetLayerManager();
+        SetCamera();
+        SetHud();
+    }
 
-        public virtual void HandleInput(GameTime gameTime) {
-            if (InputManager == null) return;
+    public abstract void LoadContent();
 
-            InputManager.GetCommands(command => {
+    public virtual void HandleInput(GameTime gameTime) {
+        if (InputManager == null) return;
+
+        InputManager.GetCommands(command => {
                 if (command is InputCommand.DebugToggle) {
-                    NotifyEvent(new Event.DebugToggle());
+                NotifyEvent(new Event.DebugToggle());
                 } else if (command is InputCommand.FullscreenToggle) {
-                    NotifyEvent(new Event.FullscreenToggle());
+                NotifyEvent(new Event.FullscreenToggle());
                 }
-            });
+                });
+    }
+
+    protected abstract void SetInputManager();
+    protected virtual void SetSoundManager() {
+        SoundManager = new SoundManager();
+    }
+
+    public virtual void SetLayerManager() {
+        LayerManager = new LayerManager();
+    }
+
+    protected virtual void SetCamera() {
+        Camera = new Camera(_viewport);
+    }
+
+    protected virtual void SetHud() {
+        Hud = new Hud(_viewport);
+    }
+
+    public void UnloadContent() {
+        _contentManager.Unload();
+    }
+
+    protected void NotifyEvent(Event gameEvent) {
+        OnEventNotification?.Invoke(this, gameEvent);
+
+        foreach (var obj in _gameObjects) {
+            if (obj != null) {
+                obj.OnNotify(gameEvent);
+            }
         }
+    }
 
-        protected abstract void SetInputManager();
-        protected virtual void SetSoundManager() {
-            SoundManager = new SoundManager();
+    protected void SwitchScene(Scene scene) {
+        OnSceneSwitched?.Invoke(this, scene);
+    }
+
+    protected virtual void UpdateObjects(GameTime gameTime) {
+        foreach (var obj in _gameObjects) {
+            obj.Update(gameTime);
         }
+    }
 
-        public virtual void SetLayerManager() {
-            LayerManager = new LayerManager();
+    protected virtual void PostUpdateObjects(GameTime gameTime) {
+        foreach (var obj in _gameObjects) {
+            obj.PostUpdate(gameTime);
         }
+    }
 
-        protected virtual void SetCamera() {
-            Camera = new Camera(_viewport);
+    protected virtual void UpdateComponentSystems(GameTime gameTime) {
+        foreach (var componentSystem in _componentSystems) {
+            componentSystem.Update(gameTime);
         }
+    }
 
-        protected virtual void SetHud() {
-            Hud = new Hud(_viewport);
-        }
+    public abstract void UpdateGameState(GameTime gameTime);
 
-        public void UnloadContent() {
-            _contentManager.Unload();
-        }
+    public void Update(GameTime gameTime) {
+        if (InputManager != null) InputManager.Update();
+        HandleInput(gameTime);
 
-        protected void NotifyEvent(Event gameEvent) {
-            OnEventNotification?.Invoke(this, gameEvent);
+        UpdateRenderArea();
 
-            foreach (var obj in _gameObjects) {
-                if (obj != null) {
-                    obj.OnNotify(gameEvent);
-                }
+        UpdateComponentSystems(gameTime);
+        UpdateGameState(gameTime);
+
+        Camera.UpdateCamera(_viewport);
+        Hud.Update(Camera.Position, Camera.Zoom);
+    }
+
+    protected void UpdateRenderArea() {
+        RenderArea.X = (int)(Camera.Position.X - (_viewport.Width / Camera.Zoom / 2));
+        RenderArea.Y = (int)(Camera.Position.Y - (_viewport.Height / Camera.Zoom / 2));
+        RenderArea.Width = (int)(_viewport.Width / Camera.Zoom);
+        RenderArea.Height = (int)(_viewport.Height / Camera.Zoom);
+    }
+
+    public void Render(SpriteBatch spriteBatch) {
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
+
+        foreach (var layer in LayerManager.Layers) {
+            foreach (var obj in layer.Objects) {
+                if (!obj.Visible || !RenderArea.Intersects(new Rectangle((int) obj.Position.X, (int) obj.Position.Y, obj.Width, obj.Height))) 
+                    continue;
+
+                obj.Render(spriteBatch);
             }
         }
 
-        protected void SwitchScene(Scene scene) {
-            OnSceneSwitched?.Invoke(this, scene);
-        }
+        Hud.Render(spriteBatch);
 
-        protected virtual void UpdateObjects(GameTime gameTime) {
-            foreach (var obj in _gameObjects) {
-                obj.Update(gameTime);
+        if (_debug) {
+            foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.Depth)) {
+                obj.RenderHitbox(spriteBatch, Color.Red, 1);
+                obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
             }
         }
 
-        protected virtual void PostUpdateObjects(GameTime gameTime) {
-            foreach (var obj in _gameObjects) {
-                obj.PostUpdate(gameTime);
+        spriteBatch.End();
+    }
+
+    protected Texture2D LoadTexture(string textureName) {
+        return _contentManager.Load<Texture2D>(textureName);
+    }
+
+    protected SpriteFont LoadFont(string fontName) {
+        return _contentManager.Load<SpriteFont>(fontName);
+    }
+
+    protected SoundEffect LoadSound(string soundName) {
+        return _contentManager.Load<SoundEffect>(soundName);
+    }
+
+    protected Effect LoadEffect(string effectName) {
+        return _contentManager.Load<Effect>(effectName);
+    }
+
+    protected void AddObject(GameObject gameObject) {
+        AddObject(gameObject, 0);
+    }
+
+    protected void AddObject(GameObject gameObject, int depth) {
+        _gameObjects.Add(gameObject);
+
+        var layer = LayerManager.FindLayer(depth);
+
+        layer.AddObject(gameObject);
+    }
+
+    protected void AddDrawableObject(Drawable obj, int depth) {
+        var layer = LayerManager.FindLayer(depth);
+
+        layer.AddObject(obj);
+    }
+
+    protected void AddEntity(Entity entity) {
+        foreach (var componentSystem in _componentSystems) {
+            if (!componentSystem.IsEntityValid(entity)) return;
+
+            componentSystem.AddEntityIfValid(entity);
+        }
+
+        _entities.Add(entity);
+    }
+
+    protected void AddComponentSystem(ComponentSystem componentSystem) {
+        componentSystem.CheckForValidEntities(_entities);
+
+        _componentSystems.Add(componentSystem);
+    }
+
+    protected void RemoveObject(GameObject gameObject) {
+        _gameObjects.Remove(gameObject);
+        foreach (var layer in LayerManager.Layers) {
+            if (layer.Objects.Contains(gameObject)) {
+                layer.RemoveObject(gameObject);
+                break;
             }
         }
+    }
 
-        protected virtual void UpdateComponentSystems(GameTime gameTime) {
-            foreach (var componentSystem in _componentSystems) {
-                componentSystem.Update(gameTime);
-            }
+    protected List<T> CleanObjects<T>(List<T> objectList, Pool<T> objectPool = null) where T : GameObject, new() {
+        List<T> listOfItemsToKeep = new List<T>();
+
+        foreach (T item in objectList) {
+            if (item.Destroyed) {
+                RemoveObject(item);
+                if (objectPool != null) objectPool.Release(item);
+            } else listOfItemsToKeep.Add(item);
         }
 
-        public abstract void UpdateGameState(GameTime gameTime);
+        return listOfItemsToKeep;
+    }
 
-        public void Update(GameTime gameTime) {
-            if (InputManager != null) InputManager.Update();
-            HandleInput(gameTime);
-
-            UpdateRenderArea();
-
-            UpdateComponentSystems(gameTime);
-            UpdateGameState(gameTime);
-
-            Camera.UpdateCamera(_viewport);
-            Hud.Update(Camera.Position, Camera.Zoom);
-        }
-
-        protected void UpdateRenderArea() {
-            RenderArea.X = (int)(Camera.Position.X - (_viewport.Width / Camera.Zoom / 2));
-            RenderArea.Y = (int)(Camera.Position.Y - (_viewport.Height / Camera.Zoom / 2));
-            RenderArea.Width = (int)(_viewport.Width / Camera.Zoom);
-            RenderArea.Height = (int)(_viewport.Height / Camera.Zoom);
-        }
-
-        public void Render(SpriteBatch spriteBatch) {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.Transform, blendState: BlendState.AlphaBlend);
-
-            foreach (var layer in LayerManager.Layers) {
-                foreach (var obj in layer.Objects) {
-                    if (!obj.Visible || !RenderArea.Intersects(new Rectangle((int) obj.Position.X, (int) obj.Position.Y, obj.Width, obj.Height))) 
-                        continue;
-
-                    obj.Render(spriteBatch);
-                }
-            }
-
-            Hud.Render(spriteBatch);
-
-            if (_debug) {
-                foreach (var obj in _gameObjects.Where(a => a != null).OrderBy(a => a.Depth)) {
-                    obj.RenderHitbox(spriteBatch, Color.Red, 1);
-                    obj.RenderOrigin(spriteBatch, Color.Yellow, 2);
-                }
-            }
-
-            spriteBatch.End();
-        }
-
-        protected Texture2D LoadTexture(string textureName) {
-            return _contentManager.Load<Texture2D>(textureName);
-        }
-
-        protected SpriteFont LoadFont(string fontName) {
-            return _contentManager.Load<SpriteFont>(fontName);
-        }
-
-        protected SoundEffect LoadSound(string soundName) {
-            return _contentManager.Load<SoundEffect>(soundName);
-        }
-
-        protected Effect LoadEffect(string effectName) {
-            return _contentManager.Load<Effect>(effectName);
-        }
-
-        protected void AddObject(GameObject gameObject) {
-            AddObject(gameObject, 0);
-        }
-
-        protected void AddObject(GameObject gameObject, int depth) {
-            _gameObjects.Add(gameObject);
-
-            var layer = LayerManager.FindLayer(depth);
-
-            layer.AddObject(gameObject);
-        }
-
-        protected void AddDrawableObject(Drawable obj, int depth) {
-            var layer = LayerManager.FindLayer(depth);
-
-            layer.AddObject(obj);
-        }
-
-        protected void AddEntity(Entity entity) {
-            foreach (var componentSystem in _componentSystems) {
-                if (!componentSystem.IsEntityValid(entity)) return;
-
-                componentSystem.AddEntityIfValid(entity);
-            }
-
-            _entities.Add(entity);
-        }
-
-        protected void AddComponentSystem(ComponentSystem componentSystem) {
-            componentSystem.CheckForValidEntities(_entities);
-
-            _componentSystems.Add(componentSystem);
-        }
-
-        protected void RemoveObject(GameObject gameObject) {
-            _gameObjects.Remove(gameObject);
-            foreach (var layer in LayerManager.Layers) {
-                if (layer.Objects.Contains(gameObject)) {
-                    layer.RemoveObject(gameObject);
-                    break;
-                }
-            }
-        }
-
-        protected List<T> CleanObjects<T>(List<T> objectList, Pool<T> objectPool = null) where T : GameObject, new() {
-            List<T> listOfItemsToKeep = new List<T>();
-
-            foreach (T item in objectList) {
-                if (item.Destroyed) {
-                    RemoveObject(item);
-                    if (objectPool != null) objectPool.Release(item);
-                } else listOfItemsToKeep.Add(item);
-            }
-
-            return listOfItemsToKeep;
-        }
-
-        public void ToggleDebug() {
-            _debug = !_debug;
-        }
+    public void ToggleDebug() {
+        _debug = !_debug;
     }
 }

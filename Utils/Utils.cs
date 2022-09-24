@@ -21,9 +21,9 @@ public static class Utils {
 
     public static Vector2 Approach(Vector2 from, Vector2 to, Vector2 amount) {
         return new Vector2(
-            Approach(from.X, to.X, amount.X),
-            Approach(from.Y, to.Y, amount.Y)
-            );
+                Approach(from.X, to.X, amount.X),
+                Approach(from.Y, to.Y, amount.Y)
+                );
     }
 
     /// <summary>
@@ -39,9 +39,9 @@ public static class Utils {
 
     public static Vector2 Lerp(Vector2 from, Vector2 to, Vector2 amount) {
         return new Vector2(
-            Lerp(from.X, to.X, amount.X),
-            Lerp(from.Y, to.Y, amount.Y)
-            );
+                Lerp(from.X, to.X, amount.X),
+                Lerp(from.Y, to.Y, amount.Y)
+                );
     }
 
     /// <summary>
@@ -57,9 +57,9 @@ public static class Utils {
 
     public static Vector2 InvLerp(Vector2 from, Vector2 to, Vector2 amount) {
         return new Vector2(
-            InvLerp(from.X, to.X, amount.X),
-            InvLerp(from.Y, to.Y, amount.Y)
-            );
+                InvLerp(from.X, to.X, amount.X),
+                InvLerp(from.Y, to.Y, amount.Y)
+                );
     }
 
     /// <summary>
@@ -76,9 +76,9 @@ public static class Utils {
 
     public static Vector2 Remap(Vector2 iMin, Vector2 iMax, Vector2 oMin, Vector2 oMax, Vector2 value) {
         return new Vector2(
-            Remap(iMin.X, iMax.X, oMin.X, oMax.X, value.X),
-            Remap(iMin.Y, iMax.Y, oMin.Y, oMax.Y, value.Y)
-            );
+                Remap(iMin.X, iMax.X, oMin.X, oMax.X, value.X),
+                Remap(iMin.Y, iMax.Y, oMin.Y, oMax.Y, value.Y)
+                );
     }
 
     /// <summary>
@@ -108,9 +108,9 @@ public static class Utils {
 
     public static Vector2 Wrap(Vector2 value, Vector2 min, Vector2 max) {
         return new Vector2(
-            Wrap(value.X, min.X, max.X),
-            Wrap(value.Y, min.Y, max.Y)
-            );
+                Wrap(value.X, min.X, max.X),
+                Wrap(value.Y, min.Y, max.Y)
+                );
     }
 
     /// <summary>
@@ -124,9 +124,9 @@ public static class Utils {
 
     public static Vector2 Clamp(Vector2 value, Vector2 min, Vector2 max) {
         return new Vector2(
-            Clamp(value.X, min.X, max.X),
-            Clamp(value.Y, min.Y, max.Y)
-            );
+                Clamp(value.X, min.X, max.X),
+                Clamp(value.Y, min.Y, max.Y)
+                );
     }
 }
 
