@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [**Input**] - `InputChanged` event alternative for `GetCommand`.
 
 ### Changed
+- BREAKING - Upgrade target framework to `net6`
 - Rename namespace EC to ECS since we are shifting into Entity Component System architecture.
 
 ## [1.0.0] - 2022-06-16
