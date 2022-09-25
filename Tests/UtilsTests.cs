@@ -1,6 +1,3 @@
-using Microsoft.Xna.Framework;
-using Xunit;
-
 namespace Pirita.Tests;
 
 public class UtilsTests {
@@ -77,3 +74,4 @@ public class UtilsTests {
         Assert.Equal(expected, result);
     }
 }
+
