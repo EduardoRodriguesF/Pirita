@@ -62,12 +62,6 @@ public class Camera {
         Bounds = bounds.Bounds;
         UpdateMatrix();
 
-        Vector2 cameraMovement = Vector2.Zero;
-
-        if (Target != null) {
-            cameraMovement = Target;
-        }
-
         _previousZoom = _zoom;
         _zoom = Zoom;
 
