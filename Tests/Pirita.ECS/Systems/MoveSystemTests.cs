@@ -1,8 +1,6 @@
-using Xunit;
 using Xunit.Abstractions;
 using Microsoft.Xna.Framework;
 using Pirita.ECS;
-using System;
 
 namespace Pirita.Tests;
 
