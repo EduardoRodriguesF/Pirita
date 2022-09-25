@@ -6,6 +6,7 @@ namespace Pirita.ECS;
 
 public class ComponentSystem {
     private List<Entity> _validEntities = new List<Entity>();
+
     public List<Type> RequiredComponents { get; private set; } = new List<Type>();
 
     public void CheckForValidEntities(List<Entity> entities) {
