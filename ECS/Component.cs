@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace Pirita.ECS;
+﻿namespace Pirita.ECS;
 
 public abstract class Component {
     public Entity Owner;
