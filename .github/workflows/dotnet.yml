@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ "master" ]
   push:
-    branches: [ "unreleased" ]
+    branches: [ "push", "unreleased" ]
 
 jobs:
   build-and-test:
@@ -20,3 +20,11 @@ jobs:
       run: dotnet build -c Release
     - name: Test
       run: dotnet test -c Release --no-build --verbosity normal
+        /p:CollectCoverage=true
+        /p:CoverletOutput=TestResults/
+        /p:CoverletOutputFormat=lcov
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: Tests/TestResults/coverage.info
