@@ -13,7 +13,7 @@ public class ComponentSystem {
         _validEntities.Clear();
 
         foreach (var entity in entities) {
-            if (!IsEntityValid(entity)) return;
+            if (!HasRequiredComponents(entity)) return;
 
             _validEntities.Add(entity);
         }
@@ -29,12 +29,9 @@ public class ComponentSystem {
         return true;
     }
 
-    public bool IsEntityValid(Entity entity) {
-        return _validEntities.Contains(entity);
-    }
-
     public bool AddEntityIfValid(Entity entity) {
-        if (!IsEntityValid(entity)) return false;
+        if (!_validEntities.Contains(entity) || !HasRequiredComponents(entity))
+            return false;
 
         entity.ComponentsChanged += OnComponentsChanged;
         _validEntities.Add(entity);

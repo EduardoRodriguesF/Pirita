@@ -200,7 +200,7 @@ public abstract class Scene {
 
     protected void AddEntity(Entity entity) {
         foreach (var componentSystem in _componentSystems) {
-            if (!componentSystem.IsEntityValid(entity)) return;
+            if (!componentSystem.HasRequiredComponents(entity)) return;
 
             componentSystem.AddEntityIfValid(entity);
         }
