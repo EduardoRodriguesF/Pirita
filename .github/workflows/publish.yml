@@ -15,10 +15,10 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
+    - name: Test
+      run: dotnet test -c Release --no-build --verbosity normal
     - name: Build
       run: dotnet build -c Release
-    - name: Test
-      run: dotnet test -c Release --no-build
     - name: Publish NuGet
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
