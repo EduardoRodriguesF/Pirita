@@ -15,6 +15,7 @@ public class UtilsTests {
     [Theory]
     [InlineData(0, 0.25f, 0.5f)]
     [InlineData(-3f, -2f, 5f)]
+    [InlineData(6f, 5f, 2f)]
     public void Approach_StopAtTo(float from, float to, float amount) {
         var result = Utils.Approach(from, to, amount);
 
