@@ -36,7 +36,11 @@ public class Entity {
     }
 
     public T GetComponent<T>() where T : Component {
-        return (T) _componentDictionary[typeof(T)];
+        Component component;
+
+        _componentDictionary.TryGetValue(typeof(T), out component);
+
+        return (T) component;
     }
 
     public bool HasComponent(Type type) {
