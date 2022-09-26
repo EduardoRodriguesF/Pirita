@@ -12,7 +12,7 @@ public class EntityTests {
 
         Component removedComponent = entity.RemoveComponent<WeirdComponent>();
 
-        Assert.DoesNotContain(removedComponent, entity.GetAllComponent());
+        Assert.DoesNotContain(removedComponent, entity.ComponentsList);
     }
 
     [Fact]
@@ -24,6 +24,6 @@ public class EntityTests {
         Component removedComponent = entity.RemoveComponent<WeirdComponent>();
 
         Assert.Null(removedComponent);
-        Assert.Contains(sampleComponent, entity.GetAllComponent());
+        Assert.Contains(sampleComponent, entity.ComponentsList);
     }
 }
