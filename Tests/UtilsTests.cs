@@ -74,5 +74,19 @@ public class UtilsTests {
 
         Assert.Equal(expected, result);
     }
+
+    [Fact]
+    public void ToRadians_ConvertsDegrees() {
+        float result = ConvertAngle.ToRadians(1f);
+
+        Assert.Equal(0.017453292f, result);
+    }
+
+    [Fact]
+    public void ToDegrees_ConvertsRadians() {
+        float result = ConvertAngle.ToDegrees(1f);
+
+        Assert.Equal(57.2957763671875, result);
+    }
 }
 
