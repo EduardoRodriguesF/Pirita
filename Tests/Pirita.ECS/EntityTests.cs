@@ -25,5 +25,6 @@ public class EntityTests {
 
         Assert.Null(removedComponent);
         Assert.Contains(sampleComponent, entity.ComponentsList);
+        Assert.Null(entity.GetComponent<WeirdComponent>());
     }
 }
