@@ -12,17 +12,18 @@ public class EntityTests {
 
         Component removedComponent = entity.RemoveComponent<WeirdComponent>();
 
-        Assert.IsType<WeirdComponent>(removedComponent);
+        Assert.DoesNotContain(removedComponent, entity.GetAllComponent());
     }
 
     [Fact]
     public void Entity_RemoveComponent_DoesNothingIfNoMatch() {
         Entity entity = new();
 
-        entity.AddComponent(new SampleComponent());
+        SampleComponent sampleComponent = entity.AddComponent(new SampleComponent());
 
         Component removedComponent = entity.RemoveComponent<WeirdComponent>();
 
         Assert.Null(removedComponent);
+        Assert.Contains(sampleComponent, entity.GetAllComponent());
     }
 }
