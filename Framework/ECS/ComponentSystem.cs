@@ -51,7 +51,7 @@ public class ComponentSystem {
     }
 
     public virtual void Update(GameTime gameTime) {
-        foreach (var entity in _validEntities) {
+        foreach (Entity entity in _validEntities) {
             UpdateOnEntity(gameTime, entity);
         }
     }
