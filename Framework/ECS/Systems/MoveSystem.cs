@@ -1,19 +1,19 @@
 using Microsoft.Xna.Framework;
 
-namespace Pirita.ECS {
-    public class MoveSystem : ComponentSystem {
-        public MoveSystem() {
-            RequiredComponents.Add(typeof(VelocityComponent));
-            RequiredComponents.Add(typeof(PositionComponent));
-        }
+namespace Pirita.ECS;
 
-        public override void UpdateOnEntity(GameTime gameTime, Entity entity) {
-            var (speed, velocity) = entity.GetComponent<VelocityComponent>();
-            var position = entity.GetComponent<PositionComponent>();
+public class MoveSystem : ComponentSystem {
+    public MoveSystem() {
+        RequiredComponents.Add(typeof(VelocityComponent));
+        RequiredComponents.Add(typeof(PositionComponent));
+    }
 
-            position.Position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
+    public override void UpdateOnEntity(GameTime gameTime, Entity entity) {
+        var (speed, velocity) = entity.GetComponent<VelocityComponent>();
+        var positionComponent = entity.GetComponent<PositionComponent>();
 
-            entity.UpdateComponent<PositionComponent>(position);
-        }
+        positionComponent.Position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
+
+        entity.UpdateComponent<PositionComponent>(positionComponent);
     }
 }
