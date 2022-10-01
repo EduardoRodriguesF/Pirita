@@ -4,16 +4,16 @@ using System.Collections;
 namespace Pirita.Pools;
 
 public interface IPoolable {
-    // Reset object's properties to their initial state.
+    /// <summary>Reset object's properties to their initial state.</summary>
     void Initialize();
 
-    // Called when an object is returned to the pool.
+    /// <summary>Called when an object is returned to the pool.</summary>
     void Release();
 
-    // Checks if the object came from the pool.
+    /// <summary>Checks if the object came from the pool.</summary>
     bool PoolIsValid { get; set; }
 
-    // Ensures object isn't freed twice.
+    /// <summary>Ensures object isn't freed twice.</summary>
     bool PoolIsFree { get; set; }
 }
 
@@ -28,7 +28,7 @@ public class Pool<T> where T : IPoolable, new() {
         }
     }
 
-    // Adds a new object to the pool (usually only used when pool is constructed
+    /// <summary>Adds a new object to the pool stack</summary>
     private void AddNewObject() {
         T obj = new T() {
             PoolIsValid = true,
@@ -37,7 +37,7 @@ public class Pool<T> where T : IPoolable, new() {
         _capacity++;
     }
 
-    // Releases an object from the pool
+    /// <summary>Releases an object from the pool</summary>
     public void Release(T obj) {
         if (obj.PoolIsFree) return;
 
@@ -51,7 +51,10 @@ public class Pool<T> where T : IPoolable, new() {
         _stack.Push(obj);
     }
 
-    // Get an object from the pool (creates an object if the pool has become depleted).
+    /// <summary>
+    /// Get an object from the pool.
+    /// Creates an object if the pool has become depleted
+    /// </summary>
     public T Get() {
         if (_stack.Count == 0) {
             AddNewObject();
