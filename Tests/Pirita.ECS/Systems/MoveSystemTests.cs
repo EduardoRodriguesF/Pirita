@@ -42,7 +42,7 @@ public class MoveSystemTests {
         var system = new MoveSystem();
         var entity = new Entity();
         var velocity = new VelocityComponent() { Velocity = new Vector2(2, 4) };
-        var position = new PositionComponent() { Position = new Vector2(1, 2) };
+        var position = new PositionComponent(1, 2);
 
         entity.AddComponent(velocity);
         entity.AddComponent(position);
