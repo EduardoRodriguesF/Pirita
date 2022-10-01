@@ -8,7 +8,4 @@ Pirita is a **work-in-progress** Monogame based Framework for crossplatform game
 
 ## The idea
 
-*[ECS]: Entity Component System
-Though still incomplete, the framework is focused in an ECS architecture.
-
-
+Though still incomplete, the framework is focused in an [ECS](https://en.wikipedia.org/wiki/Entity_component_system) architecture.
