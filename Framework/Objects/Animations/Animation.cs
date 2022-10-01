@@ -9,9 +9,9 @@ public class Animation {
     public Vector2 InvertedOffset { get; set; }
     public int CurrentFrame { get; set; }
     public int FrameCount { get; private set; }
-    public int FrameHeight { get { return Texture.Height; } }
+    public int FrameHeight { get => Texture.Height; }
     public float FrameSpeed { get; set; }
-    public int FrameWidth { get { return Texture.Width / FrameCount; } }
+    public int FrameWidth { get => Texture.Width / FrameCount; }
     public bool isLooping { get; set; }
 
     public Animation(Texture2D texture, int frameCount, float frameSpeed, bool loop = true) {
