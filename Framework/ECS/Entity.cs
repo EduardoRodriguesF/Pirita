@@ -29,7 +29,6 @@ public class Entity {
         ComponentsList.Add(component);
         _componentDictionary.Add(typeof(T), component);
 
-        component.Owner = this;
         OnComponentsChanged();
 
         return component;
@@ -59,7 +58,6 @@ public class Entity {
             component.Enabled = false;
             _componentDictionary.Remove(type);
             ComponentsList.Remove(component);
-            component.Owner = null;
             OnComponentsChanged();
 
             return (T) component;
