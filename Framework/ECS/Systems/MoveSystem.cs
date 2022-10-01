@@ -14,6 +14,6 @@ public class MoveSystem : ComponentSystem {
 
         positionComponent.Position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
 
-        entity.UpdateComponent<PositionComponent>(positionComponent);
+        entity.UpdateComponent(positionComponent);
     }
 }
