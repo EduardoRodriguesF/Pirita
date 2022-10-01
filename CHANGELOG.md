@@ -7,14 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - 2022-06-21
 
 ### Added 
-- New `MoveSystem` class.
-- New `VelocityComponent` class.
-- New `PositionComponent` class.
+- Collection of Components and Systems to get started with ECS.
 - Input: `InputChanged` event alternative for `GetCommand`.
 
 ### Changed
 - BREAKING: Upgrade target framework to `net6`
-- Rename namespace EC to ECS since we are shifting into Entity Component System architecture.
+- Replace namespace EC to ECS because of new entity-component-system focused implementation.
 
 ## [1.0.0] - 2022-06-16
 
